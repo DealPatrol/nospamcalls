@@ -17,6 +17,12 @@ export type ReportRow = {
 	created_at: string;
 };
 
+function asIso(value: unknown): string {
+	if (value instanceof Date) return value.toISOString();
+	const parsed = new Date(String(value));
+	return Number.isNaN(parsed.getTime()) ? String(value) : parsed.toISOString();
+}
+
 export type NumberSummary = {
 	total: number;
 	byCategory: Record<string, number>;
@@ -44,7 +50,7 @@ export async function getNumberSummary(e164: string): Promise<NumberSummary> {
 	return {
 		total,
 		byCategory,
-		recent: recent as ReportRow[]
+		recent: (recent as ReportRow[]).map((row) => ({ ...row, created_at: asIso(row.created_at) }))
 	};
 }
 
