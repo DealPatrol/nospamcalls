@@ -1,6 +1,6 @@
 import { neon } from '@neondatabase/serverless';
 import type { CategoryId } from './categories';
- import { REPORTS_PER_HOUR, WAITLIST_PER_HOUR } from './limits';
+import { REPORTS_PER_HOUR, WAITLIST_PER_HOUR } from './limits';
 import { hourWindow } from './security';
 
 function client() {
@@ -119,4 +119,21 @@ export async function recentReportedSlugs(limit = 200): Promise<string[]> {
 		LIMIT ${limit}
 	`;
 	return (rows as { number_e164: string }[]).map((r) => r.number_e164);
+}
+
+export async function getReportsByAreaCode(npa: string, limit = 25): Promise<{ total: number; recent: ReportRow[] }> {
+	const sql = client();
+	const prefix = `+1${npa}`;
+	const [countRows, recent] = await Promise.all([
+		sql`SELECT count(*)::int AS count FROM reports WHERE number_e164 LIKE ${prefix + '%'} AND length(number_e164) >= 12`,
+		sql`SELECT id, number_e164, category, comment, created_at
+			FROM reports
+			WHERE number_e164 LIKE ${prefix + '%'} AND length(number_e164) >= 12
+			ORDER BY created_at DESC
+			LIMIT ${limit}`
+	]);
+	return {
+		total: Number((countRows[0] as { count: number }).count),
+		recent: (recent as ReportRow[]).map((row) => ({ ...row, created_at: asIso(row.created_at) }))
+	};
 }

@@ -98,4 +98,14 @@
 		<a href="https://consumercomplaints.fcc.gov/hc/en-us" rel="noopener noreferrer">FCC</a>.
 		Reporting is not the same as suing someone, and we cannot tell you whether you have a legal claim.
 	</p>
+
+	<h2>More guides</h2>
+	<ul>
+		<li><a href="/block-spam-calls">Block spam calls on iPhone, Android, and your carrier</a></li>
+		<li><a href="/report-spam-calls">How to report spam calls to the FTC and FCC</a></li>
+		<li><a href="/scams">Phone and text scam guides</a></li>
+		<li><a href="/scam-likely">What “Scam Likely” means</a></li>
+		<li><a href="/tcpa-rights">Your rights under the TCPA</a></li>
+		<li><a href="/area-code">U.S. area-code directory</a></li>
+	</ul>
 </article>

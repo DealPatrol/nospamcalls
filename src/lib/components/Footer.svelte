@@ -4,11 +4,17 @@
 			NoSpamCalls helps people look up and report unwanted calls. It is not legal advice, and it cannot
 			guarantee that spam will stop.
 		</p>
-		<nav aria-label="Legal">
+		<nav aria-label="Footer">
+			<a href="/scams">Scam guides</a>
+			<a href="/block-spam-calls">Block spam calls</a>
+			<a href="/area-code">Area codes</a>
+			<a href="/report-spam-calls">Report to the FTC or FCC</a>
+			<a href="/scam-likely">What “Scam Likely” means</a>
+			<a href="/tcpa-rights">TCPA rights</a>
+			<a href="/stop-spam-calls">Do Not Call guide</a>
+			<a href="/business">Business waitlist</a>
 			<a href="/privacy">Privacy</a>
 			<a href="/terms">Terms</a>
-			<a href="/stop-spam-calls">How to stop spam calls</a>
-			<a href="/business">Business waitlist</a>
 		</nav>
 	</div>
 </footer>

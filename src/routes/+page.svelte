@@ -1,16 +1,18 @@
 <script lang="ts">
-	import SearchForm from '#lib/components/SearchForm.svelte';
-	import AdSlot from '#lib/components/AdSlot.svelte';
-	import { SITE_NAME } from '#lib/site';
+	import SearchForm from "#lib/components/SearchForm.svelte";
+	import AdSlot from "#lib/components/AdSlot.svelte";
+	import SeoHead from "#lib/components/SeoHead.svelte";
+	import { SITE_NAME } from "#lib/site";
+	import type { PageProps } from "./$types";
+
+	let { data }: PageProps = $props();
+	const title = `${SITE_NAME} — Look up a spam call, then stop the next one`;
+	const description =
+		"Free community lookup for spam, scam, and robocall numbers. Report a caller and get a plain-English guide to Do Not Call registration, carrier tools, and data-broker opt-outs.";
+	const canonical = $derived(`${data.origin}/`);
 </script>
 
-<svelte:head>
-	<title>{SITE_NAME} — Look up a spam call, then stop the next one</title>
-	<meta
-		name="description"
-		content="Free community lookup for spam, scam, and robocall numbers. Report a caller and get a plain-English guide to Do Not Call registration, carrier tools, and data-broker opt-outs."
-	/>
-</svelte:head>
+<SeoHead {title} {description} {canonical} type="website" />
 
 <section class="hero">
 	<p class="muted">Free community lookup</p>
@@ -31,11 +33,32 @@
 		<p><a href="/report">File a report</a></p>
 	</article>
 	<article class="card">
-		<h2>Stop spam calls</h2>
+		<h2>Block spam calls</h2>
 		<p>
-			Register on the National Do Not Call list, turn on carrier and phone tools, and opt out of data-broker listings.
+			Use free iPhone, Android, AT&amp;T, Verizon, and T-Mobile tools, then register on the National Do Not
+			Call list.
 		</p>
-		<p><a href="/stop-spam-calls">Read the free guide</a></p>
+		<p><a href="/block-spam-calls">See the block guides</a></p>
+	</article>
+	<article class="card">
+		<h2>Common phone and text scams</h2>
+		<p>
+			IRS, Social Security, car warranty, fake bank alerts, unpaid-toll texts, one-ring calls, and more —
+			with official FTC and FCC links.
+		</p>
+		<p><a href="/scams">Read the scam guides</a></p>
+	</article>
+	<article class="card">
+		<h2>Look up an area code</h2>
+		<p>
+			Official NANPA facts for every in-service U.S. geographic area code, plus any recent community reports.
+		</p>
+		<p><a href="/area-code">Browse area codes</a></p>
+	</article>
+	<article class="card">
+		<h2>What does “Scam Likely” mean?</h2>
+		<p>It is a carrier warning, not a legal finding. Legitimate businesses sometimes get the same label.</p>
+		<p><a href="/scam-likely">Read the explanation</a></p>
 	</article>
 	<article class="card">
 		<h2>Is your business flagged “Scam Likely”?</h2>
