@@ -1,0 +1,10 @@
+# NoSpamCalls
+
+> NoSpamCalls is a free community lookup for spam, scam, and robocall numbers, plus a guide to stopping unwanted calls. It is not legal advice and cannot guarantee that spam will stop.
+
+- Home: https://nospamcalls.vercel.app/
+- How to stop spam calls: https://nospamcalls.vercel.app/stop-spam-calls
+- Public contact and legal pages: /privacy and /terms
+
+## Other sites from the same maker
+Cole Collins also operates Executive Receptionist (https://executivereceptionist.com), an AI receptionist for inbound business calls, and other official sites listed at https://executivereceptionist.com/about.
