@@ -35,6 +35,6 @@ export const load: PageServerLoad = async ({ params, url }) => {
 };
 
 export const actions: Actions = {
-	default: async (event) => handleReportAction(event),
+	create: async (event) => handleReportAction(event),
 	alert: async (event) => handleNumberAlertAction(event)
 };

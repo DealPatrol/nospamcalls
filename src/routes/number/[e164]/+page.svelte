@@ -85,7 +85,7 @@
 
 <section>
 	<h2>Report this number</h2>
-	<ReportForm number={data.national} {form} action="?/" />
+	<ReportForm number={data.national} {form} action="?/create" />
 </section>
 
 <section>
