@@ -30,7 +30,7 @@ npm run dev
 
 - `DATABASE_URL` — Postgres connection string
 - `IP_HASH_SECRET` — salt used to hash IP addresses for rate limiting
-- `PUBLIC_SITE_URL` — canonical origin, for example `https://example.vercel.app`
+- `PUBLIC_SITE_URL` — canonical origin, for example `https://nospamcalls.org`
 
 ## Notes
 

@@ -24,7 +24,7 @@ You asked us to save your spam-protection plan (score: [score] of 6).
 
 Here are the next free steps we recommended: [insert the personalized checklist].
 
-You can print the plan again at https://nospamcalls.vercel.app/protect
+You can print the plan again at https://nospamcalls.org/protect
 
 If you also joined the app waitlist, see the note above: no payment now.
 
@@ -52,7 +52,7 @@ We saved your request for [business name] / [number].
 
 What we can say today: [count] community reports on NoSpamCalls, or none yet. Our log is not what carriers or caller-ID apps use. We cannot promise to clear a label.
 
-Useful official next step: ask the carrier that originates your calls about STIR/SHAKEN and any dispute process, and read https://nospamcalls.vercel.app/scam-likely
+Useful official next step: ask the carrier that originates your calls about STIR/SHAKEN and any dispute process, and read https://nospamcalls.org/scam-likely
 
 Your email is also on the business waitlist for a possible reputation service.
 
