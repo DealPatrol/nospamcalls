@@ -3,6 +3,7 @@
 
 	const links = [
 		{ href: "/", label: "Lookup" },
+		{ href: "/protect", label: "Checkup" },
 		{ href: "/scams", label: "Scams" },
 		{ href: "/block-spam-calls", label: "Block spam" },
 		{ href: "/area-code", label: "Area codes" },

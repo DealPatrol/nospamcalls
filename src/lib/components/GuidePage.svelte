@@ -10,6 +10,7 @@
 	import Breadcrumbs from "./Breadcrumbs.svelte";
 	import Disclaimer from "./Disclaimer.svelte";
 	import SeoHead from "./SeoHead.svelte";
+	import TopicCta from "./TopicCta.svelte";
 
 	let { guide, origin }: { guide: Guide; origin: string } = $props();
 
@@ -46,6 +47,39 @@
 		<p>{guide.answer}</p>
 	</div>
 	<Disclaimer />
+	{#if guide.section === "scams"}
+		<TopicCta
+			variant="report"
+			heading="Did a number like this call you?"
+			body="Add it to the public log, then get a free two-minute plan to tighten your phone and carrier settings."
+			href="/report"
+			label="Report a number"
+		/>
+	{:else if guide.section === "block"}
+		<TopicCta
+			variant="protect"
+			heading="Get a personalized blocking plan"
+			body="Answer six questions and print a checklist for iPhone, Android, your carrier, and the Do Not Call list. No account required."
+			href="/protect"
+			label="Take the free checkup"
+		/>
+	{:else if guide.path === "/scam-likely"}
+		<TopicCta
+			variant="business"
+			heading="Is a real business number being flagged?"
+			body="Request a free look at our community log and official next steps. We cannot promise to clear a label."
+			href="/business"
+			label="Request a free Scam Likely check"
+		/>
+	{:else if guide.path === "/report-spam-calls"}
+		<TopicCta
+			variant="report"
+			heading="Also log the number here"
+			body="Official FTC and FCC reports come first. A NoSpamCalls report helps the next person who looks the number up."
+			href="/report"
+			label="Report a number"
+		/>
+	{/if}
 
 	{#each guide.sections as section}
 		<h2>{section.heading}</h2>
@@ -79,4 +113,15 @@
 			{/each}
 		</ul>
 	{/if}
+
+	<div class="no-print">
+		<TopicCta
+			variant="protect"
+			heading="Free next step: a two-minute protection plan"
+			body="See which official, free settings you still have turned off. Email is optional. If you want an app later, the waitlist includes a founding-member pricing promise and no payment now."
+			href="/protect"
+			label="Get my plan"
+		/>
+		<p class="fine-print"><a href="/app">Join the app waitlist</a> if you want a note when a consumer app is ready.</p>
+	</div>
 </article>

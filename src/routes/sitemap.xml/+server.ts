@@ -13,6 +13,7 @@ const STATIC_PATHS = [
 	"/app",
 	"/privacy",
 	"/terms",
+	"/protect",
 	...SEO_HUB_PATHS,
 	...allGuidePaths()
 ];

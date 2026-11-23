@@ -5,7 +5,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PROFANITY_RE =
 	/\b(fuck|shit|bitch|asshole|cunt|nigger|nigga|faggot|retard|whore|slut|bastard)\b/i;
 
-import { COMMENT_MAX } from './limits';
+import { COMMENT_MAX, NAME_MAX } from './limits';
 
 export { COMMENT_MAX } from './limits';
 
@@ -44,4 +44,19 @@ export function hourWindow(now = new Date()): Date {
 	const d = new Date(now);
 	d.setUTCMinutes(0, 0, 0);
 	return d;
+}
+
+export function sanitizeName(raw: string): { ok: true; name: string } | { ok: false; error: string } {
+	const name = raw.trim().replace(/\s+/g, ' ');
+	if (!name) return { ok: false, error: 'Enter a business or organization name.' };
+	if (name.length > NAME_MAX) {
+		return { ok: false, error: `Names must be ${NAME_MAX} characters or fewer.` };
+	}
+	if (URL_RE.test(name)) {
+		return { ok: false, error: 'Names cannot include website addresses or links.' };
+	}
+	if (PROFANITY_RE.test(name)) {
+		return { ok: false, error: 'Please keep names civil and free of profanity.' };
+	}
+	return { ok: true, name };
 }

@@ -5,6 +5,7 @@
 			guarantee that spam will stop.
 		</p>
 		<nav aria-label="Footer">
+			<a href="/protect">Free protection checkup</a>
 			<a href="/scams">Scam guides</a>
 			<a href="/block-spam-calls">Block spam calls</a>
 			<a href="/area-code">Area codes</a>
@@ -12,7 +13,8 @@
 			<a href="/scam-likely">What “Scam Likely” means</a>
 			<a href="/tcpa-rights">TCPA rights</a>
 			<a href="/stop-spam-calls">Do Not Call guide</a>
-			<a href="/business">Business waitlist</a>
+			<a href="/app">App waitlist</a>
+			<a href="/business">Free Scam Likely check</a>
 			<a href="/privacy">Privacy</a>
 			<a href="/terms">Terms</a>
 		</nav>

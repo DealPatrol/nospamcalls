@@ -8,7 +8,7 @@
 		action = '/report?/create'
 	}: {
 		number?: string;
-		form?: { error?: string; success?: boolean } | null;
+		form?: { error?: string; success?: boolean; slug?: string } | null;
 		action?: string;
 	} = $props();
 </script>
@@ -18,7 +18,13 @@
 		<p class="form-error" role="alert">{form.error}</p>
 	{/if}
 	{#if form?.success}
-		<p class="form-success" role="status">Thanks. Your report is now on the lookup page.</p>
+		<p class="form-success" role="status">
+			Thanks. Your report is now on the lookup page.
+			{#if form.slug}
+				<a href="/number/{form.slug}">See it and request alerts if it is reported again</a>.
+			{/if}
+			You can also <a href="/protect">get a free protection plan</a>.
+		</p>
 	{/if}
 
 	<label>

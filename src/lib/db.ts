@@ -1,6 +1,6 @@
 import { neon } from '@neondatabase/serverless';
 import type { CategoryId } from './categories';
-import { REPORTS_PER_HOUR, WAITLIST_PER_HOUR } from './limits';
+import { ALERTS_PER_HOUR, CHECKS_PER_HOUR, REPORTS_PER_HOUR, WAITLIST_PER_HOUR } from './limits';
 import { hourWindow } from './security';
 
 function client() {
@@ -136,4 +136,135 @@ export async function getReportsByAreaCode(npa: string, limit = 25): Promise<{ t
 		total: Number((countRows[0] as { count: number }).count),
 		recent: (recent as ReportRow[]).map((row) => ({ ...row, created_at: asIso(row.created_at) }))
 	};
+}
+
+export type PublicStats = {
+	reports: number;
+	appWaitlist: number;
+	businessWaitlist: number;
+};
+
+export async function getPublicStats(): Promise<PublicStats> {
+	const sql = client();
+	const rows = await sql`
+		SELECT
+			(SELECT count(*)::int FROM reports) AS reports,
+			(SELECT count(*)::int FROM waitlist WHERE type = 'app') AS app_waitlist,
+			(SELECT count(*)::int FROM waitlist WHERE type = 'business') AS business_waitlist
+	`;
+	const row = rows[0] as { reports: number; app_waitlist: number; business_waitlist: number };
+	return {
+		reports: Number(row.reports),
+		appWaitlist: Number(row.app_waitlist),
+		businessWaitlist: Number(row.business_waitlist)
+	};
+}
+
+export async function incrementSiteEvent(event: string, path: string): Promise<void> {
+	const sql = client();
+	const safeEvent = event.slice(0, 64);
+	const safePath = (path || '/').slice(0, 200);
+	await sql`
+		INSERT INTO site_events (event, path, day, count)
+		VALUES (${safeEvent}, ${safePath}, CURRENT_DATE, 1)
+		ON CONFLICT (event, path, day)
+		DO UPDATE SET count = site_events.count + 1
+	`;
+}
+
+export async function insertEmailSignup(input: {
+	email: string;
+	kind: string;
+	sourcePath?: string | null;
+	quizScore?: number | null;
+	quizAnswers?: Record<string, string> | null;
+	ipHash: string;
+}): Promise<{ ok: true; already: boolean } | { ok: false; error: string }> {
+	const sql = client();
+	const windowStart = hourWindow();
+	const limited = await sql`
+		INSERT INTO rate_limits (ip_hash, action, window_start, count)
+		VALUES (${input.ipHash}, ${'signup:' + input.kind}, ${windowStart.toISOString()}, 1)
+		ON CONFLICT (ip_hash, action, window_start)
+		DO UPDATE SET count = rate_limits.count + 1
+		RETURNING count
+	`;
+	const count = Number((limited[0] as { count: number }).count);
+	if (count > WAITLIST_PER_HOUR) {
+		return { ok: false, error: 'Too many sign-ups from this network. Please try again later.' };
+	}
+
+	const existing = await sql`
+		SELECT id FROM email_signups
+		WHERE email = ${input.email} AND kind = ${input.kind}
+		ORDER BY created_at DESC
+		LIMIT 1
+	`;
+	await sql`
+		INSERT INTO email_signups (email, kind, source_path, quiz_score, quiz_answers)
+		VALUES (
+			${input.email},
+			${input.kind},
+			${input.sourcePath ?? null},
+			${input.quizScore ?? null},
+			${input.quizAnswers ?? null}
+		)
+	`;
+	return { ok: true, already: existing.length > 0 };
+}
+
+export async function insertNumberAlert(input: {
+	email: string;
+	e164: string;
+	ipHash: string;
+}): Promise<{ ok: true; already: boolean } | { ok: false; error: string }> {
+	const sql = client();
+	const windowStart = hourWindow();
+	const limited = await sql`
+		INSERT INTO rate_limits (ip_hash, action, window_start, count)
+		VALUES (${input.ipHash}, 'number_alert', ${windowStart.toISOString()}, 1)
+		ON CONFLICT (ip_hash, action, window_start)
+		DO UPDATE SET count = rate_limits.count + 1
+		RETURNING count
+	`;
+	const count = Number((limited[0] as { count: number }).count);
+	if (count > ALERTS_PER_HOUR) {
+		return { ok: false, error: 'Too many alert requests from this network. Please try again later.' };
+	}
+
+	const result = await sql`
+		INSERT INTO number_alerts (email, number_e164, ip_hash)
+		VALUES (${input.email}, ${input.e164}, ${input.ipHash})
+		ON CONFLICT (email, number_e164) DO NOTHING
+		RETURNING id
+	`;
+	return { ok: true, already: result.length === 0 };
+}
+
+export async function insertBusinessCheck(input: {
+	email: string;
+	businessName: string;
+	e164: string;
+	notes: string | null;
+	ipHash: string;
+}): Promise<{ ok: true } | { ok: false; error: string }> {
+	const sql = client();
+	const windowStart = hourWindow();
+	const limited = await sql`
+		INSERT INTO rate_limits (ip_hash, action, window_start, count)
+		VALUES (${input.ipHash}, 'business_check', ${windowStart.toISOString()}, 1)
+		ON CONFLICT (ip_hash, action, window_start)
+		DO UPDATE SET count = rate_limits.count + 1
+		RETURNING count
+	`;
+	const count = Number((limited[0] as { count: number }).count);
+	if (count > CHECKS_PER_HOUR) {
+		return { ok: false, error: 'Too many check requests from this network. Please try again later.' };
+	}
+
+	await sql`
+		INSERT INTO business_checks (email, business_name, number_e164, notes, ip_hash)
+		VALUES (${input.email}, ${input.businessName}, ${input.e164}, ${input.notes}, ${input.ipHash})
+	`;
+	return { ok: true };
 }

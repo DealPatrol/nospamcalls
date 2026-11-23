@@ -2,6 +2,7 @@
 	import SearchForm from "#lib/components/SearchForm.svelte";
 	import AdSlot from "#lib/components/AdSlot.svelte";
 	import SeoHead from "#lib/components/SeoHead.svelte";
+	import SocialProof from "#lib/components/SocialProof.svelte";
 	import { SITE_NAME } from "#lib/site";
 	import type { PageProps } from "./$types";
 
@@ -22,11 +23,21 @@
 		or debt collection. It does not block calls by itself, and it cannot promise that spam will stop.
 	</p>
 	<SearchForm />
+	<SocialProof
+		reports={data.stats.reports}
+		appWaitlist={data.stats.appWaitlist}
+		businessWaitlist={data.stats.businessWaitlist}
+	/>
 </section>
 
 <AdSlot />
 
 <div class="grid-2">
+	<article class="card">
+		<h2>Free spam-protection checkup</h2>
+		<p>Answer six questions and get a printable plan for your phone, carrier, and the Do Not Call list. No account required.</p>
+		<p><a href="/protect">Get my plan</a></p>
+	</article>
 	<article class="card">
 		<h2>Report a number</h2>
 		<p>If a call wasted your time or tried to trick you, add it to the public log so the next person can see it.</p>
@@ -56,13 +67,21 @@
 		<p><a href="/area-code">Browse area codes</a></p>
 	</article>
 	<article class="card">
+		<h2>App waitlist — no payment now</h2>
+		<p>
+			If we launch a consumer app and charge for it, waitlist members get founding-member pricing first. We
+			will tell you the price before any charge.
+		</p>
+		<p><a href="/app">Join the app waitlist</a></p>
+	</article>
+	<article class="card">
 		<h2>What does “Scam Likely” mean?</h2>
 		<p>It is a carrier warning, not a legal finding. Legitimate businesses sometimes get the same label.</p>
-		<p><a href="/scam-likely">Read the explanation</a></p>
+		<p><a href="/scam-likely">Read the explanation</a> or <a href="/business">request a free business check</a>.</p>
 	</article>
 	<article class="card">
 		<h2>Is your business flagged “Scam Likely”?</h2>
-		<p>Legitimate shops get mislabeled too. Join the waitlist for a number-reputation service.</p>
-		<p><a href="/business">Business waitlist</a></p>
+		<p>Legitimate shops get mislabeled too. Request a free look at our community log and official next steps.</p>
+		<p><a href="/business">Free Scam Likely check</a></p>
 	</article>
 </div>

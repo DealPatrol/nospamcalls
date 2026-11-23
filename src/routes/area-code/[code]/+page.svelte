@@ -2,6 +2,7 @@
 	import Breadcrumbs from "#lib/components/Breadcrumbs.svelte";
 	import Disclaimer from "#lib/components/Disclaimer.svelte";
 	import SeoHead from "#lib/components/SeoHead.svelte";
+	import TopicCta from "#lib/components/TopicCta.svelte";
 	import { AREA_CODE_SOURCE } from "#lib/data/area-codes";
 	import { e164ToSlug, formatNational } from "#lib/phone";
 	import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, type Crumb } from "#lib/seo";
@@ -166,6 +167,16 @@
 		<a href="/report">Report a number</a> or <a href="/">look up a full number</a>. To report a scam to
 		the government, use <a href="/report-spam-calls">the official FTC and FCC steps</a>.
 	</p>
+
+	<div class="no-print">
+		<TopicCta
+			variant="protect"
+			heading="Got a call from this area code?"
+			body="Look up the full number, report it if it was a scam or robocall, and get a free two-minute plan for your phone and carrier. Seeing this area code on caller ID does not prove the caller is nearby."
+			href="/protect"
+			label="Get a free protection plan"
+		/>
+	</div>
 
 	<h2>Frequently asked questions</h2>
 	{#each faqs as faq}

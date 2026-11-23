@@ -1,5 +1,6 @@
 <script lang="ts">
 	import AdSlot from '#lib/components/AdSlot.svelte';
+	import AlertForm from '#lib/components/AlertForm.svelte';
 	import ReportForm from '#lib/components/ReportForm.svelte';
 	import { CATEGORIES, categoryLabel, type CategoryId } from '#lib/categories';
 	import type { PageProps } from './$types';
@@ -86,3 +87,14 @@
 	<h2>Report this number</h2>
 	<ReportForm number={data.national} {form} action="?/" />
 </section>
+
+<section>
+	<h2>Get alerts if this number is reported again</h2>
+	<p>
+		Optional. We will only email you about this number, and only after an email service is connected. We
+		are not sending those alerts yet.
+	</p>
+	<AlertForm number={data.national} {form} />
+</section>
+
+<p><a href="/protect">Get a free spam-protection plan</a> for the next unwanted call.</p>

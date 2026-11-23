@@ -1,7 +1,7 @@
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { getNumberSummary } from '#lib/db';
-import { handleReportAction } from '#lib/forms';
+import { handleNumberAlertAction, handleReportAction } from '#lib/forms';
 import { e164ToSlug, formatInternational, formatNational, slugToE164 } from '#lib/phone';
 import { absoluteUrl } from '#lib/site';
 
@@ -35,5 +35,6 @@ export const load: PageServerLoad = async ({ params, url }) => {
 };
 
 export const actions: Actions = {
-	default: async (event) => handleReportAction(event)
+	default: async (event) => handleReportAction(event),
+	alert: async (event) => handleNumberAlertAction(event)
 };
