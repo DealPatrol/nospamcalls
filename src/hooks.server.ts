@@ -1,4 +1,3 @@
-import { redirect } from '@sveltejs/kit';
 import type { Handle } from '@sveltejs/kit/hooks';
 
 export const handle: Handle = async ({ event, resolve }) => {
@@ -7,7 +6,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 		// 301 for GET/HEAD so search engines transfer ranking. 308 for other
 		// methods so POST/API requests are not converted to GET.
 		const method = event.request.method.toUpperCase();
-		redirect(method === 'GET' || method === 'HEAD' ? 301 : 308, destination);
+		const status = method === 'GET' || method === 'HEAD' ? 301 : 308;
+		return new Response(null, {
+			status,
+			headers: { location: destination }
+		});
 	}
 
 	return resolve(event);
