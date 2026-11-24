@@ -1,10 +1,32 @@
 # NoSpamCalls
 
-> NoSpamCalls is a free community lookup for spam, scam, and robocall numbers, plus a guide to stopping unwanted calls. It is not legal advice and cannot guarantee that spam will stop.
+> NoSpamCalls (https://nospamcalls.org) helps people in the United States stop spam calls and spam email. It combines a spam-number lookup backed by FTC and FCC complaint data, a personal "slipped-through" blocklist you can download as a .vcf contact, free TCPA self-help tools for getting money from illegal robocallers, a data-broker opt-out center, an email header analyzer, and a phone and carrier setup wizard. The web tools are free. A flat-price plan with live call screening ($9/month founding rate) is announced; nothing is charged today. NoSpamCalls is not a law firm and does not give legal advice.
 
-- Home: https://nospamcalls.org/
-- How to stop spam calls: https://nospamcalls.org/stop-spam-calls
-- Public contact and legal pages: /privacy and /terms
+## Core tools
+- [Home](https://nospamcalls.org/): quick-block a number that got through, the flat plan, and spam number search.
+- [Block a Number](https://nospamcalls.org/blocklist): personal blocklist plus a downloadable .vcf contact containing your numbers and the most-reported FTC/FCC numbers of the last 30 days, with iPhone and Android import-and-block steps.
+- [Get Paid](https://nospamcalls.org/get-paid): verified open TCPA class-action settlements (checked on official settlement sites), a statutory damages estimator (47 U.S.C. § 227: $500 per violation, up to $1,500 if willful — legal maximums, not guaranteed), a robocall evidence log, a printable evidence packet, a self-help demand letter template, and links to NACA, the FTC, and the FCC.
+- [Opt-Out Center](https://nospamcalls.org/opt-out): official opt-out links for 14 data brokers and people-search companies (covering Whitepages, Spokeo, TruePeopleSearch, FastPeopleSearch, BeenVerified, Intelius, Instant Checkmate, TruthFinder, Nuwber, PeopleFinders, Acxiom, Epsilon, LexisNexis and more), a removal tracker, a state privacy-law deletion email generator (CCPA/CPRA, VCDPA, CPA, TDPSA, CTDPA), California DROP, DoNotCall.gov, OptOutPrescreen, and DMAchoice.
+- [Email Shield](https://nospamcalls.org/email-shield): paste raw email headers to check SPF, DKIM and DMARC, find the originating IP and its network owner and abuse contact via RDAP, draft an abuse report, and export Gmail filters (mailFilters.xml) plus Outlook and Apple Mail rules. Headers are not stored.
+- [Phone Setup](https://nospamcalls.org/setup): iPhone (iOS 26 Ask Reason for Calling, iOS 18 Silence Unknown Callers) and Android Call Screen steps, Verizon Call Filter, AT&T ActiveArmor, T-Mobile Scam Shield, and conditional call forwarding on/off codes.
+
+## Data
+- Number pages: https://nospamcalls.org/number/{E.164 digits without +}, for example https://nospamcalls.org/number/12178637210. Each shows FTC + FCC complaint counts, the latest complaint date and topic, and community reports.
+- Sources: FCC Consumer Complaints open data (issue "Unwanted Calls") and the FTC Do Not Call Reported Calls Data API, refreshed daily; community reports submitted on this site. Caller ID can be spoofed, so a listed number may not belong to the company that called.
+
+## Guides and directories
+- [How to stop spam calls](https://nospamcalls.org/stop-spam-calls)
+- [Block spam calls (iPhone, Android, AT&T, Verizon, T-Mobile)](https://nospamcalls.org/block-spam-calls)
+- [Report spam calls to the FTC and FCC](https://nospamcalls.org/report-spam-calls)
+- [Phone and text scam guides](https://nospamcalls.org/scams)
+- [What "Scam Likely" means](https://nospamcalls.org/scam-likely)
+- [TCPA rights](https://nospamcalls.org/tcpa-rights)
+- [U.S. area-code directory](https://nospamcalls.org/area-code)
+- [Free spam-protection checkup](https://nospamcalls.org/protect)
+- [Report a number](https://nospamcalls.org/report)
+- [Business "Scam Likely" check](https://nospamcalls.org/business)
+- [Sitemap](https://nospamcalls.org/sitemap.xml)
+- Public legal pages: [Privacy](https://nospamcalls.org/privacy) and [Terms](https://nospamcalls.org/terms)
 
 ## Other sites from the same maker
 Cole Collins also operates Executive Receptionist (https://executivereceptionist.com), an AI receptionist for inbound business calls, and other official sites listed at https://executivereceptionist.com/about.

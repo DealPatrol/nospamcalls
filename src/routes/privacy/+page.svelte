@@ -46,6 +46,32 @@
 			to the business waitlist.
 		</li>
 		<li>
+			<strong>Personal blocklist (optional):</strong> when you add a number on Block a Number, we store that phone number, the
+			call type, and any company name or note you typed, linked to a random workspace key saved in your browser. Adding a
+			number also files a community report for it (your note is published only if it passes our comment rules). If you enter
+			an email to sync across devices, we store a keyed one-way hash of that email as your workspace key, not the email itself.
+		</li>
+		<li>
+			<strong>TCPA evidence log (optional):</strong> the calls and texts you log on Get Paid (number, date and time, company
+			details, checkboxes, and notes) are stored under the same workspace key so you can print your packet later. They are not
+			published and are never sent to any company or lawyer. The demand-letter fields (your name, address, and the company’s
+			address) stay in your browser and are not sent to us.
+		</li>
+		<li>
+			<strong>Opt-out progress (optional):</strong> the status you choose for each data broker is saved in your browser and,
+			under your workspace key, in our database. The privacy deletion email generator runs only in your browser; the personal
+			details you type into it are not sent to us.
+		</li>
+		<li>
+			<strong>Email header analyzer:</strong> raw email headers or domains you submit to <code>/api/email-analyze</code> are
+			parsed in memory to answer your request and are never stored in our database or logs. To answer, our server looks up
+			public DNS records and queries public RDAP registries about the sending IP address.
+		</li>
+		<li>
+			<strong>Plan and settlement alert emails:</strong> if you join the founding-member plan or ask to hear about new TCPA
+			settlements, we store your email and which list you joined. Nothing is charged.
+		</li>
+		<li>
 			<strong>Security logs:</strong> we store a one-way hash of your IP address, not the raw IP, to limit
 			spam and abuse. The hash is not intended to identify you.
 		</li>
@@ -71,14 +97,26 @@
 
 	<h2>How long we keep data</h2>
 	<p>
-		Public reports stay up unless we remove them for abuse, legal reasons, or a valid request. Waitlist,
+		Public reports stay up unless we remove them for abuse, legal reasons, or a valid request. Your blocklist, evidence log,
+		and opt-out progress stay until you delete entries in the tool or ask us to remove them. Waitlist,
 		plan, number-alert, and business-check emails are kept until they are used for the request you made,
 		the related product launches, or you ask to be removed. Rate-limit records and anonymous action counts
 		are used only for abuse prevention and to understand which forms people complete.
 	</p>
 
-	<h2>Cookies and accounts</h2>
-	<p>This site does not require an account. We do not use advertising cookies.</p>
+	<h2>Cookies, browser storage, and accounts</h2>
+	<p>
+		This site does not require an account. We do not use advertising cookies. The free tools save a random workspace key and
+		your checklist progress in your browser’s local storage so your list is there when you come back. Clearing your browser
+		storage removes that key; if you synced with an email, entering it again restores your list.
+	</p>
+
+	<h2>Public government data</h2>
+	<p>
+		Number pages show counts from the FCC Consumer Complaints open dataset and the FTC Do Not Call Reported Calls Data API.
+		We store only the reported caller numbers, complaint counts, dates, topics, and a sample city and state — not the names
+		or contact details of the people who complained.
+	</p>
 
 	<h2>Children</h2>
 	<p>The site is not directed at children under 13, and we do not knowingly collect their information.</p>

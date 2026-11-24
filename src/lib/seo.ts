@@ -69,3 +69,43 @@ export function howToJsonLd(opts: {
 }
 
 export { absoluteUrl, SITE_NAME };
+
+export function webAppJsonLd(opts: { origin: string; path: string; name: string; description: string; category?: string }) {
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'WebApplication',
+		name: opts.name,
+		description: opts.description,
+		url: `${opts.origin}${opts.path}`,
+		applicationCategory: opts.category ?? 'SecurityApplication',
+		operatingSystem: 'Any (web browser)',
+		isAccessibleForFree: true,
+		offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+		publisher: { '@type': 'Organization', name: SITE_NAME, url: opts.origin }
+	};
+}
+
+export function websiteJsonLd(origin: string) {
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'WebSite',
+		name: SITE_NAME,
+		url: `${origin}/`,
+		potentialAction: {
+			'@type': 'SearchAction',
+			target: { '@type': 'EntryPoint', urlTemplate: `${origin}/number/{phone}` },
+			'query-input': 'required name=phone'
+		}
+	};
+}
+
+export function organizationJsonLd(origin: string) {
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'Organization',
+		name: SITE_NAME,
+		url: `${origin}/`,
+		description:
+			'Free spam-call lookup backed by FTC and FCC complaint data, a personal blocklist, TCPA self-help tools, data-broker opt-outs, and email spam tools.'
+	};
+}

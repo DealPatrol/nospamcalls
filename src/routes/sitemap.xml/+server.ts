@@ -1,12 +1,18 @@
 import { allGuidePaths, SEO_HUB_PATHS } from "#lib/content/guides";
 import { AREA_CODES } from "#lib/data/area-codes";
 import { recentReportedSlugs } from "#lib/db";
+import { sitemapGovNumbers } from "#lib/server/gov";
 import { e164ToSlug } from "#lib/phone";
 import { absoluteUrl } from "#lib/site";
 import type { RequestHandler } from "./$types";
 
 const STATIC_PATHS = [
 	"/",
+	"/blocklist",
+	"/get-paid",
+	"/opt-out",
+	"/email-shield",
+	"/setup",
 	"/report",
 	"/stop-spam-calls",
 	"/business",
@@ -26,6 +32,12 @@ export const GET: RequestHandler = async () => {
 		numbers = await recentReportedSlugs(1000);
 	} catch (err) {
 		console.error("sitemap number query failed", err);
+	}
+	try {
+		const gov = await sitemapGovNumbers(500);
+		numbers = [...new Set([...numbers, ...gov])];
+	} catch (err) {
+		console.error("sitemap gov number query failed", err);
 	}
 
 	const urls = [

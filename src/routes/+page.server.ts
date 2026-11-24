@@ -1,10 +1,19 @@
 import type { Actions, PageServerLoad } from './$types';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import { slugToE164, e164ToSlug } from '#lib/phone';
-import { redirect } from '@sveltejs/kit';
+import { govStats, topGovNumbers, type GovNumber } from '#lib/server/gov';
 
 export const load: PageServerLoad = async () => {
-	return {};
+	let active: GovNumber[] = [];
+	let gov = { numbers: 0, complaints: 0, lastIngest: null as string | null };
+	if (process.env.DATABASE_URL) {
+		try {
+			[active, gov] = await Promise.all([topGovNumbers(8, 7, 2), govStats()]);
+		} catch (err) {
+			console.error('home gov data failed', err);
+		}
+	}
+	return { active, gov };
 };
 
 export const actions: Actions = {
