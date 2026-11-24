@@ -2,7 +2,9 @@
 	import { onMount } from "svelte";
 	import SeoHead from "#lib/components/SeoHead.svelte";
 	import Breadcrumbs from "#lib/components/Breadcrumbs.svelte";
-	import EmailSignup from "#lib/components/EmailSignup.svelte";
+	import EmailCaptureBar from "#lib/components/EmailCaptureBar.svelte";
+	import UnlockGate from "#lib/components/UnlockGate.svelte";
+	import ProCallout from "#lib/components/ProCallout.svelte";
 	import Faq from "#lib/components/Faq.svelte";
 	import { getAccountKey, postJson, setAccountKey } from "#lib/account";
 	import { breadcrumbJsonLd, faqJsonLd, howToJsonLd, webAppJsonLd, type Crumb } from "#lib/seo";
@@ -266,9 +268,15 @@ ${yourName || "[Your full name]"}`
 	{:else}
 		<p>No TCPA settlements are verified open right now. Get an email when we verify a new one.</p>
 	{/if}
-	<div class="tool-card">
-		<h3>Email me when new TCPA settlements open</h3>
-		<EmailSignup kind="tcpa_settlements" button="Alert me" success="Saved. We’ll only email you about newly verified TCPA settlements." />
+	<EmailCaptureBar
+		headline="Get an email the day a new $500–$1,500-type TCPA settlement opens"
+		sub="We check official, court-approved settlement sites and only email verified claims you can file yourself. Free."
+		leadMagnet="settlement_alert"
+		button="Alert me free"
+		unlockedText="We’ll email you when we verify a new TCPA settlement."
+		alwaysAsk
+	/>
+	<div>
 		<p class="muted">Also check the FTC’s official list of <a href="https://www.ftc.gov/refunds" rel="noopener noreferrer">FTC refund programs</a>.</p>
 	</div>
 </section>
@@ -360,11 +368,19 @@ ${yourName || "[Your full name]"}`
 		</div>
 		<h3>Printable TCPA evidence packet</h3>
 		<pre class="letter">{packet}</pre>
-		<div class="btn-row no-print">
-			<button class="btn" type="button" onclick={() => copy(packet, "packet")}>Copy packet</button>
-			<button class="btn secondary" type="button" onclick={() => window.print()}>Print / save PDF</button>
-			{#if copied === "packet"}<span class="form-success">Copied</span>{/if}
-		</div>
+		<UnlockGate
+			headline="Unlock your printable evidence packet — free"
+			sub="Enter your email once to copy or print the packet and demand letter. We’ll also alert you when new TCPA settlements open."
+			leadMagnet="tcpa_packet"
+			contextValue="packet"
+			button="Unlock packet"
+		>
+			<div class="btn-row no-print">
+				<button class="btn" type="button" onclick={() => copy(packet, "packet")}>Copy packet</button>
+				<button class="btn secondary" type="button" onclick={() => window.print()}>Print / save PDF</button>
+				{#if copied === "packet"}<span class="form-success">Copied</span>{/if}
+			</div>
+		</UnlockGate>
 	{/if}
 </section>
 
@@ -384,15 +400,25 @@ ${yourName || "[Your full name]"}`
 		</form>
 		<div>
 			<pre class="letter">{letter}</pre>
-			<div class="btn-row no-print">
-				<button class="btn" type="button" onclick={() => copy(letter, "letter")}>Copy letter</button>
-				<button class="btn secondary" type="button" onclick={() => window.print()}>Print / save PDF</button>
-				{#if copied === "letter"}<span class="form-success">Copied</span>{/if}
-			</div>
+			<UnlockGate
+				headline="Unlock your demand letter — free"
+				sub="One email lets you copy and print the letter (and every other free download on NoSpamCalls)."
+				leadMagnet="tcpa_packet"
+				contextValue="demand_letter"
+				button="Unlock letter"
+			>
+				<div class="btn-row no-print">
+					<button class="btn" type="button" onclick={() => copy(letter, "letter")}>Copy letter</button>
+					<button class="btn secondary" type="button" onclick={() => window.print()}>Print / save PDF</button>
+					{#if copied === "letter"}<span class="form-success">Copied</span>{/if}
+				</div>
+			</UnlockGate>
 		</div>
 	</div>
 	<p class="muted">Tip: look up a company’s registered agent on your Secretary of State’s business search. Send by certified mail and keep a copy.</p>
 </section>
+
+<ProCallout feature="Automated TCPA cash recovery" text="Pro will log calls automatically, identify the company behind them, and match you to open settlements." />
 
 <section id="lawyer">
 	<h2>5. Work with a consumer protection lawyer ($0 upfront)</h2>

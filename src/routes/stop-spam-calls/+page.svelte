@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { SITE_NAME } from '#lib/site';
+	import EmailCaptureBar from '#lib/components/EmailCaptureBar.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -22,6 +23,15 @@
 		No tool stops every robocall, especially when scammers spoof a new number each time. These official
 		and built-in steps still help, and they are free. This page is general information, not legal advice.
 	</p>
+	<EmailCaptureBar
+		headline="Get our free Top-100 spammer blocklist (.vcf) and weekly scam alerts"
+		sub="One email. Unlocks every free download on NoSpamCalls. Unsubscribe anytime."
+		leadMagnet="guide_checklist"
+		contextValue="stop-spam-calls"
+		button="Get it free"
+	>
+		<p><a class="btn small secondary" href="/api/blocklist.vcf?includeTop=1" download="nospamcalls-blocklist.vcf">Download Top-100 blocklist (.vcf)</a></p>
+	</EmailCaptureBar>
 
 	<h2>1. Register on the National Do Not Call list</h2>
 	<p>

@@ -8,7 +8,9 @@
 		{ href: "/email-shield", label: "Email Shield" },
 		{ href: "/opt-out", label: "Opt-Out" },
 		{ href: "/setup", label: "Phone Setup" },
-		{ href: "/business", label: "Business" }
+		{ href: "/spam-call-data", label: "Spam Data" },
+		{ href: "/business", label: "Business" },
+		{ href: "/app", label: "Pro Early Access" }
 	];
 
 	function current(href: string, pathname: string): boolean {

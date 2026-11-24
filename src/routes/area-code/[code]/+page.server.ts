@@ -1,6 +1,7 @@
 import { error } from "@sveltejs/kit";
 import { getReportsByAreaCode } from "#lib/db";
 import { getAreaCode } from "#lib/data/area-codes";
+import { govNumbersByAreaCode } from "#lib/server/gov";
 import type { PageServerLoad } from "./$types";
 
 export const prerender = false;
@@ -16,5 +17,12 @@ export const load: PageServerLoad = async ({ params }) => {
 		console.error("area-code report query failed", err);
 	}
 
-	return { code, reports };
+	let gov: Awaited<ReturnType<typeof govNumbersByAreaCode>> = { numbers: [], total: 0, complaints: 0 };
+	try {
+		gov = await govNumbersByAreaCode(code.npa, 10);
+	} catch (err) {
+		console.error("area-code gov query failed", err);
+	}
+
+	return { code, reports, gov };
 };

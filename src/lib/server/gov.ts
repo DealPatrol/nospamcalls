@@ -349,3 +349,85 @@ export async function govStats(): Promise<{ numbers: number; complaints: number;
 		lastIngest: r.last_ingest ? new Date(String(r.last_ingest)).toISOString() : null
 	};
 }
+
+/** Most-reported numbers whose caller ID starts with a given US area code (all time in our data). */
+export async function govNumbersByAreaCode(npa: string, limit = 10): Promise<{ numbers: GovNumber[]; total: number; complaints: number }> {
+	if (!/^\d{3}$/.test(npa)) return { numbers: [], total: 0, complaints: 0 };
+	await ensureSchema();
+	const sql = sqlClient();
+	const prefix = `+1${npa}%`;
+	const [rows, agg] = await Promise.all([
+		sql`SELECT * FROM gov_spam_numbers WHERE e164 LIKE ${prefix}
+			ORDER BY total_gov_count DESC, last_reported_at DESC NULLS LAST LIMIT ${limit}`,
+		sql`SELECT count(*)::int AS total, coalesce(sum(total_gov_count),0)::int AS complaints FROM gov_spam_numbers WHERE e164 LIKE ${prefix}`
+	]);
+	const a = agg[0] as { total: number; complaints: number };
+	return { numbers: (rows as Record<string, unknown>[]).map(normalizeRow), total: Number(a.total), complaints: Number(a.complaints) };
+}
+
+export type DataIndex = {
+	numbers: number;
+	complaints: number;
+	fccNumbers: number;
+	ftcNumbers: number;
+	fccComplaints: number;
+	ftcComplaints: number;
+	repeatNumbers: number;
+	firstComplaint: string | null;
+	latestComplaint: string | null;
+	lastIngest: string | null;
+	top: GovNumber[];
+	areaCodes: { npa: string; numbers: number; complaints: number }[];
+	states: { state: string; numbers: number; complaints: number }[];
+	subjects: { label: string; numbers: number; complaints: number }[];
+	methods: { label: string; numbers: number; complaints: number }[];
+};
+
+/** Live aggregates for the public /spam-call-data index. All figures are computed from gov_spam_numbers. */
+export async function dataIndex(): Promise<DataIndex> {
+	await ensureSchema();
+	const sql = sqlClient();
+	const [totals, top, areaCodes, states, subjects, methods] = await Promise.all([
+		sql`SELECT count(*)::int AS numbers,
+				coalesce(sum(total_gov_count),0)::int AS complaints,
+				count(*) FILTER (WHERE fcc_count > 0)::int AS fcc_numbers,
+				count(*) FILTER (WHERE ftc_count > 0)::int AS ftc_numbers,
+				coalesce(sum(fcc_count),0)::int AS fcc_complaints,
+				coalesce(sum(ftc_count),0)::int AS ftc_complaints,
+				count(*) FILTER (WHERE total_gov_count >= 2)::int AS repeat_numbers,
+				min(first_reported_at) AS first_complaint,
+				max(last_reported_at) AS latest_complaint,
+				max(updated_at) AS last_ingest
+			FROM gov_spam_numbers`,
+		sql`SELECT * FROM gov_spam_numbers ORDER BY total_gov_count DESC, last_reported_at DESC NULLS LAST LIMIT 25`,
+		sql`SELECT substring(e164 from 3 for 3) AS npa, count(*)::int AS numbers, sum(total_gov_count)::int AS complaints
+			FROM gov_spam_numbers WHERE e164 LIKE '+1%' GROUP BY 1 ORDER BY complaints DESC, numbers DESC LIMIT 15`,
+		sql`SELECT sample_state AS state, count(*)::int AS numbers, sum(total_gov_count)::int AS complaints
+			FROM gov_spam_numbers WHERE sample_state ~ '^[A-Z]{2}$' GROUP BY 1 ORDER BY complaints DESC LIMIT 15`,
+		sql`SELECT top_subject AS label, count(*)::int AS numbers, sum(total_gov_count)::int AS complaints
+			FROM gov_spam_numbers WHERE top_subject IS NOT NULL AND top_subject <> '' GROUP BY 1 ORDER BY complaints DESC LIMIT 12`,
+		sql`SELECT top_method AS label, count(*)::int AS numbers, sum(total_gov_count)::int AS complaints
+			FROM gov_spam_numbers WHERE top_method IS NOT NULL AND top_method <> '' GROUP BY 1 ORDER BY complaints DESC LIMIT 8`
+	]);
+	const t = totals[0] as Record<string, unknown>;
+	const iso = (v: unknown) => (v ? new Date(String(v)).toISOString() : null);
+	const num = <T extends Record<string, unknown>>(rows: unknown[]) =>
+		(rows as T[]).map((r) => ({ ...r, numbers: Number(r.numbers), complaints: Number(r.complaints) }));
+	return {
+		numbers: Number(t.numbers),
+		complaints: Number(t.complaints),
+		fccNumbers: Number(t.fcc_numbers),
+		ftcNumbers: Number(t.ftc_numbers),
+		fccComplaints: Number(t.fcc_complaints),
+		ftcComplaints: Number(t.ftc_complaints),
+		repeatNumbers: Number(t.repeat_numbers),
+		firstComplaint: iso(t.first_complaint),
+		latestComplaint: iso(t.latest_complaint),
+		lastIngest: iso(t.last_ingest),
+		top: (top as Record<string, unknown>[]).map(normalizeRow),
+		areaCodes: num<{ npa: string; numbers: number; complaints: number }>(areaCodes),
+		states: num<{ state: string; numbers: number; complaints: number }>(states),
+		subjects: num<{ label: string; numbers: number; complaints: number }>(subjects),
+		methods: num<{ label: string; numbers: number; complaints: number }>(methods)
+	};
+}

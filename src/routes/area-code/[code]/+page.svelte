@@ -3,6 +3,7 @@
 	import Disclaimer from "#lib/components/Disclaimer.svelte";
 	import SeoHead from "#lib/components/SeoHead.svelte";
 	import TopicCta from "#lib/components/TopicCta.svelte";
+	import EmailCaptureBar from "#lib/components/EmailCaptureBar.svelte";
 	import { AREA_CODE_SOURCE } from "#lib/data/area-codes";
 	import { e164ToSlug, formatNational } from "#lib/phone";
 	import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, type Crumb } from "#lib/seo";
@@ -91,7 +92,23 @@
 				caller is in {place}, because numbers are routinely spoofed.
 			</p>
 		{/if}
+		{#if data.gov.total}
+			<p>
+				In FTC and FCC unwanted-call complaints, {data.gov.total.toLocaleString("en-US")} reported caller
+				number{data.gov.total === 1 ? "" : "s"} start with {code.npa}, across {data.gov.complaints.toLocaleString("en-US")}
+				complaint{data.gov.complaints === 1 ? "" : "s"}.
+			</p>
+		{/if}
 	</div>
+	<EmailCaptureBar
+		headline={`Get free weekly spam alerts & top blocked numbers for the ${code.npa} area code.`}
+		sub="Plus our free Top-100 Active Spammers blocklist (.vcf). One email, unsubscribe anytime."
+		leadMagnet="area_code_alert"
+		contextValue={code.npa}
+		button="Alert me free"
+		unlockedText={`We’ll include ${code.npa} in your weekly spam alerts.`}
+		alwaysAsk
+	/>
 	<Disclaimer />
 
 	<h2>Official numbering facts</h2>
@@ -132,6 +149,25 @@
 		<a href="/scams">scam guides</a>, <a href="/scams/one-ring-wangiri">one-ring scams</a>, and
 		<a href="/block-spam-calls">how to block spam calls</a>.
 	</p>
+
+	{#if data.gov.numbers.length}
+		<h2>Most-reported {code.npa} numbers in federal complaints</h2>
+		<div class="table-wrap">
+			<table class="data-table">
+				<thead><tr><th>Number</th><th>FTC + FCC complaints</th><th>Latest topic</th></tr></thead>
+				<tbody>
+					{#each data.gov.numbers as n}
+						<tr>
+							<td><a href="/number/{e164ToSlug(n.e164)}">{formatNational(n.e164)}</a></td>
+							<td>{n.total_gov_count}</td>
+							<td>{n.top_subject ?? "—"}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+		<p class="muted">Source: FCC Consumer Complaints open data and the FTC Do Not Call Reported Calls API. Unverified consumer reports; caller ID can be spoofed. <a href="/spam-call-data">See the national data index</a>.</p>
+	{/if}
 
 	<h2>Community reports for this area code</h2>
 	{#if data.reports.total === 0}

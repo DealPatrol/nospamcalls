@@ -48,8 +48,8 @@
 		<li>
 			<strong>Personal blocklist (optional):</strong> when you add a number on Block a Number, we store that phone number, the
 			call type, and any company name or note you typed, linked to a random workspace key saved in your browser. Adding a
-			number also files a community report for it (your note is published only if it passes our comment rules). If you enter
-			an email to sync across devices, we store a keyed one-way hash of that email as your workspace key, not the email itself.
+			number also files a community report for it (your note is published only if it passes our comment rules). Your email is never
+			used as the key, so nobody can open your list by knowing your email address.
 		</li>
 		<li>
 			<strong>TCPA evidence log (optional):</strong> the calls and texts you log on Get Paid (number, date and time, company
@@ -68,16 +68,20 @@
 			public DNS records and queries public RDAP registries about the sending IP address.
 		</li>
 		<li>
-			<strong>Plan and settlement alert emails:</strong> if you join the founding-member plan or ask to hear about new TCPA
-			settlements, we store your email and which list you joined. Nothing is charged.
+			<strong>Free sign-ups, downloads, and alerts:</strong> when you enter your email to unlock a download or printable, get
+			scam or settlement alerts, follow a number or area code, get a re-check reminder, or join the NoSpamCalls Pro early-access
+			list, we store your email, the page you were on, which offer you chose, the number, area code, or guide it was about (if
+			any), and any Pro features you ticked. This is kept separately from your blocklist, evidence log, and opt-out progress and
+			is never linked to them. We set <code>nsc_unlocked=1</code> in a cookie and in local storage, and keep your email in this
+			browser’s local storage, so you are not asked again. Nothing is charged.
 		</li>
 		<li>
 			<strong>Security logs:</strong> we store a one-way hash of your IP address, not the raw IP, to limit
 			spam and abuse. The hash is not intended to identify you.
 		</li>
 		<li>
-			<strong>Anonymous action counts:</strong> we store aggregate counts of actions such as waitlist
-			signups, reports, checkup emails, number-alert requests, and business checks (event name, page path,
+			<strong>Anonymous action counts:</strong> we store aggregate counts of actions such as sign-ups by
+			page and offer, Pro feature votes, reports, checkup emails, number-alert requests, and business checks (event name, page path,
 			and date). These counts are not tied to your email or IP address.
 		</li>
 		<li>
@@ -90,25 +94,26 @@
 	<p>
 		We do not run a third-party advertising network on this site. Placeholder “advertisement” areas may
 		appear, but they are empty. We do not sell your email. We do not use your reports to place
-		telemarketing calls. We are not currently sending email; addresses are stored so we can contact you
-		later if an email service is connected and you asked for that update. We did not enable Vercel Web
+		telemarketing calls. We only email you about what you signed up for, and every email will include a
+		way to unsubscribe. We did not enable Vercel Web
 		Analytics on this project because it can incur usage charges on a Pro plan.
 	</p>
 
 	<h2>How long we keep data</h2>
 	<p>
 		Public reports stay up unless we remove them for abuse, legal reasons, or a valid request. Your blocklist, evidence log,
-		and opt-out progress stay until you delete entries in the tool or ask us to remove them. Waitlist,
-		plan, number-alert, and business-check emails are kept until they are used for the request you made,
-		the related product launches, or you ask to be removed. Rate-limit records and anonymous action counts
+		and opt-out progress stay until you delete entries in the tool or ask us to remove them. Sign-up, alert,
+		waitlist, and business-check emails are kept until you unsubscribe or ask to be removed. Rate-limit records and anonymous action counts
 		are used only for abuse prevention and to understand which forms people complete.
 	</p>
 
 	<h2>Cookies, browser storage, and accounts</h2>
 	<p>
 		This site does not require an account. We do not use advertising cookies. The free tools save a random workspace key and
-		your checklist progress in your browser’s local storage so your list is there when you come back. Clearing your browser
-		storage removes that key; if you synced with an email, entering it again restores your list.
+		your checklist progress in your browser’s local storage so your list is there when you come back. That random key is the
+		only way to open your blocklist, evidence log, or opt-out progress; clearing your browser storage removes it. After you
+		unlock downloads, a first-party <code>nsc_unlocked</code> cookie and your email are stored in this browser only so we
+		don’t ask again.
 	</p>
 
 	<h2>Public government data</h2>
@@ -123,8 +128,8 @@
 
 	<h2>Contact</h2>
 	<p>
-		For privacy questions or to ask us to remove an email we stored (waitlist, plan, number alert, or
-		business check), use the contact method published on this site when one is available, or do not submit
+		For privacy questions or to ask us to remove an email we stored (sign-up, alert, Pro early access,
+		waitlist, or business check), use the contact method published on this site when one is available, or do not submit
 		additional personal information until one is.
 	</p>
 </article>

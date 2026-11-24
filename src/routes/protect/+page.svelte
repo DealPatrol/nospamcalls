@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Breadcrumbs from "#lib/components/Breadcrumbs.svelte";
-	import EmailCapture from "#lib/components/EmailCapture.svelte";
+	import EmailCaptureBar from "#lib/components/EmailCaptureBar.svelte";
+	import UnlockGate from "#lib/components/UnlockGate.svelte";
 	import SeoHead from "#lib/components/SeoHead.svelte";
 	import { articleJsonLd, breadcrumbJsonLd, type Crumb } from "#lib/seo";
 	import { QUIZ_QUESTIONS, quizLabel, scoreQuiz, type QuizAnswers } from "#lib/quiz";
@@ -52,7 +53,7 @@
 		<p class="answer-label">In short</p>
 		<p>
 			Answer six yes-or-no questions about how you handle unknown calls and scam texts. You will get a
-			personalized plan you can print. Email is optional and not required to see your results.
+			personalized plan. Your results show right away; printing the plan asks for your email once.
 		</p>
 	</div>
 
@@ -94,28 +95,23 @@
 					</li>
 				{/each}
 			</ol>
-			<p class="print-actions no-print">
-				<button type="button" class="cta-button cta-button-solid" onclick={() => window.print()}>
-					Print this plan
-				</button>
-				<button type="button" class="text-button" onclick={resetQuiz}>Start over</button>
-			</p>
-
-			<section class="no-print">
-				<h2>Email this plan (optional)</h2>
-				<p>
-					You do not need to leave an email to keep or print the plan. If you want a copy later, or
-					founding-member notice if an app launches, you can add your email below.
-				</p>
-				<EmailCapture
-					kind="quiz"
-					sourcePath="/protect"
-					showAppOptIn={true}
-					answers={answers as QuizAnswers}
-					{form}
-					submitLabel="Save my email for this plan"
-				/>
-			</section>
+			<div class="no-print">
+				<UnlockGate
+					headline="Print or save your personal protection plan — free"
+					sub="Enter your email once to print this plan. We’ll also send weekly scam alerts and our Top-100 spammer blocklist. Unsubscribe anytime."
+					leadMagnet="guide_checklist"
+					contextValue="protect-plan"
+					button="Unlock my plan"
+				>
+					<p class="print-actions">
+						<button type="button" class="cta-button cta-button-solid" onclick={() => window.print()}>
+							Print this plan
+						</button>
+						<a class="btn small secondary" href="/api/blocklist.vcf?includeTop=1" download="nospamcalls-blocklist.vcf">Download Top-100 blocklist (.vcf)</a>
+					</p>
+				</UnlockGate>
+				<p><button type="button" class="text-button" onclick={resetQuiz}>Start over</button></p>
+			</div>
 		</div>
 	{/if}
 
@@ -125,7 +121,8 @@
 			<li><a href="/block-spam-calls">Block spam calls on iPhone, Android, and your carrier</a></li>
 			<li><a href="/stop-spam-calls">Register on the National Do Not Call list</a></li>
 			<li><a href="/report-spam-calls">Report scams to the FTC and FCC</a></li>
-			<li><a href="/app">Join the app waitlist</a> (founding-member pricing if we charge later; no payment now)</li>
+			<li><a href="/blocklist">Block a number that got through</a> and <a href="/get-paid">see open TCPA settlements</a></li>
+			<li><a href="/app#pro">Join the free NoSpamCalls Pro early-access list</a> (not launched, nothing to pay)</li>
 		</ul>
 	</section>
 </article>

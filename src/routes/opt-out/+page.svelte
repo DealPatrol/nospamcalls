@@ -3,7 +3,10 @@
 	import SeoHead from "#lib/components/SeoHead.svelte";
 	import Breadcrumbs from "#lib/components/Breadcrumbs.svelte";
 	import Faq from "#lib/components/Faq.svelte";
-	import { getAccountKey, postJson, setAccountKey } from "#lib/account";
+	import { getAccountKey, postJson } from "#lib/account";
+	import EmailCaptureBar from "#lib/components/EmailCaptureBar.svelte";
+	import UnlockGate from "#lib/components/UnlockGate.svelte";
+	import ProCallout from "#lib/components/ProCallout.svelte";
 	import { breadcrumbJsonLd, faqJsonLd, howToJsonLd, webAppJsonLd, type Crumb } from "#lib/seo";
 	import type { PageProps } from "./$types";
 
@@ -21,8 +24,6 @@
 	const LS = "nsc_optout_progress";
 	let progress = $state<Record<string, Status>>({});
 	let key = $state("");
-	let syncEmail = $state("");
-	let syncMsg = $state("");
 
 	onMount(async () => {
 		key = getAccountKey();
@@ -43,21 +44,6 @@
 		progress = { ...progress, [slug]: status };
 		localStorage.setItem(LS, JSON.stringify(progress));
 		postJson("/api/optout", { key, broker: slug, status }).catch(() => {});
-	}
-
-	async function sync(event: SubmitEvent) {
-		event.preventDefault();
-		syncMsg = "";
-		try {
-			const res = await postJson<{ key: string; progress: Record<string, Status> }>("/api/optout", { key, email: syncEmail, progress });
-			key = res.key;
-			setAccountKey(res.key);
-			progress = { ...progress, ...res.progress };
-			localStorage.setItem(LS, JSON.stringify(progress));
-			syncMsg = "Synced. Enter the same email on another device to load this checklist.";
-		} catch (err) {
-			syncMsg = (err as Error).message;
-		}
 	}
 
 	const done = $derived(data.brokers.filter((b) => progress[b.slug] === "removed").length);
@@ -185,11 +171,15 @@ ${fullName || "[your full name]"}`
 		</table>
 	</div>
 	<p class="muted">Progress saves in this browser automatically. Note: Radaris.com and PeekYou.com currently show court-order domain-transfer notices, so they are not listed.</p>
-	<form class="tool-form tool-card" onsubmit={sync} style="max-width: 32rem">
-		<label><span>Sync this checklist across devices (optional email)</span><input type="email" bind:value={syncEmail} required autocomplete="email" /></label>
-		<button class="btn" type="submit">Sync my progress</button>
-		{#if syncMsg}<p class="muted">{syncMsg}</p>{/if}
-	</form>
+	<EmailCaptureBar
+		headline="Get a free 90-day re-check reminder"
+		sub="Data brokers often re-list people after a few months. We’ll email you a reminder to re-check these sites, plus new opt-out links as we verify them."
+		leadMagnet="optout_kit"
+		contextValue="recheck_90d"
+		button="Remind me free"
+		unlockedText="We’ll remind you to re-check your listings in about 90 days."
+		alwaysAsk
+	/>
 </section>
 
 <section id="deletion-email">
@@ -217,14 +207,24 @@ ${fullName || "[your full name]"}`
 			<pre class="letter">Subject: {subject}
 
 {body}</pre>
-			<div class="btn-row">
-				<a class="btn" href={mailto}>Open in my email app</a>
-				<button class="btn secondary" type="button" onclick={copyLetter}>{copied ? "Copied" : "Copy text"}</button>
-			</div>
+			<UnlockGate
+				headline="Unlock your deletion email — free"
+				sub="Enter your email once to copy or open this request in your email app. The personal details you typed above stay in your browser."
+				leadMagnet="optout_kit"
+				contextValue={`deletion_${law}`}
+				button="Unlock email"
+			>
+				<div class="btn-row">
+					<a class="btn" href={mailto}>Open in my email app</a>
+					<button class="btn secondary" type="button" onclick={copyLetter}>{copied ? "Copied" : "Copy text"}</button>
+				</div>
+			</UnlockGate>
 			<p class="muted">Find a company’s privacy email in its privacy policy (look for “Your privacy rights” or “Do Not Sell”). Not legal advice.</p>
 		</div>
 	</div>
 </section>
+
+<ProCallout feature="Done-for-you data-broker removal" text="Pro will send removal requests for you and re-scan data brokers every month." />
 
 <Faq {faqs} />
 <p>Related: <a href="/stop-spam-calls">how to stop spam calls</a> · <a href="/email-shield">email spam shield</a> · <a href="/blocklist">block a number</a></p>

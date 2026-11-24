@@ -4,7 +4,7 @@ const KEY = 'nsc_account_key';
 export function getAccountKey(): string {
 	if (typeof localStorage === 'undefined') return '';
 	let key = localStorage.getItem(KEY) ?? '';
-	if (!/^([a-f0-9]{32}|em_[a-f0-9]{40})$/.test(key)) {
+	if (!/^[a-f0-9]{32}$/.test(key)) {
 		const bytes = new Uint8Array(16);
 		crypto.getRandomValues(bytes);
 		key = [...bytes].map((b) => b.toString(16).padStart(2, '0')).join('');
@@ -15,7 +15,7 @@ export function getAccountKey(): string {
 
 export function setAccountKey(key: string): void {
 	if (typeof localStorage === 'undefined') return;
-	if (/^([a-f0-9]{32}|em_[a-f0-9]{40})$/.test(key)) localStorage.setItem(KEY, key);
+	if (/^[a-f0-9]{32}$/.test(key)) localStorage.setItem(KEY, key);
 }
 
 export async function postJson<T = Record<string, unknown>>(url: string, body: unknown, method = 'POST'): Promise<T> {

@@ -1,10 +1,10 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
 import { addToBlocklist, listBlocklist, removeFromBlocklist } from '#lib/server/accounts';
-import { allowAction, emailAccountKey, isAccountKey, mergeAccount } from '#lib/server/db';
+import { allowAction, isAccountKey } from '#lib/server/db';
 import { insertReport, incrementSiteEvent } from '#lib/db';
 import { isCategory, type CategoryId } from '#lib/categories';
 import { normalizeToE164, slugToE164 } from '#lib/phone';
-import { hashIp, normalizeEmail, sanitizeComment } from '#lib/security';
+import { hashIp, sanitizeComment } from '#lib/security';
 
 const CALL_TYPES = ['robocall', 'scam', 'telemarketer', 'debt_collector', 'other'] as const;
 
@@ -24,16 +24,7 @@ export const POST: RequestHandler = async (event) => {
 	const body = (await event.request.json().catch(() => ({}))) as Record<string, unknown>;
 	if (typeof body.website === 'string' && body.website.trim()) return json({ ok: true });
 
-	let key = isAccountKey(body.key) ? body.key : null;
-	const email = typeof body.email === 'string' && body.email.trim() ? normalizeEmail(body.email) : null;
-	if (typeof body.email === 'string' && body.email.trim() && !email) {
-		return json({ error: 'That email address does not look right.' }, { status: 400 });
-	}
-	if (email) {
-		const emailKey = emailAccountKey(email);
-		if (key) await mergeAccount(key, emailKey);
-		key = emailKey;
-	}
+	const key = isAccountKey(body.key) ? body.key : null;
 	if (!key) return json({ error: 'Missing list key. Refresh the page and try again.' }, { status: 400 });
 
 	const raw = String(body.number ?? '');

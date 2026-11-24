@@ -2,6 +2,7 @@
 	import SeoHead from "#lib/components/SeoHead.svelte";
 	import Breadcrumbs from "#lib/components/Breadcrumbs.svelte";
 	import Faq from "#lib/components/Faq.svelte";
+	import UnlockGate from "#lib/components/UnlockGate.svelte";
 	import { postJson } from "#lib/account";
 	import { breadcrumbJsonLd, faqJsonLd, howToJsonLd, webAppJsonLd, type Crumb } from "#lib/seo";
 	import type { PageProps } from "./$types";
@@ -312,9 +313,16 @@ ${headers.trim()}`
 			<h3>Gmail</h3>
 			<p class="muted">Search preview (test it in Gmail’s search box first):</p>
 			<p class="code">{gmailQuery || "Add a domain, sender, or phrase"}</p>
-			<div class="btn-row">
-				<button class="btn" type="button" disabled={!hasRules} onclick={downloadXml}>Download mailFilters.xml</button>
-			</div>
+			<UnlockGate
+				headline="Download your Gmail spam-blocking filter file — free"
+				sub="One email unlocks the mailFilters.xml download and every other free download on NoSpamCalls."
+				leadMagnet="gmail_filters"
+				button="Unlock download"
+			>
+				<div class="btn-row">
+					<button class="btn" type="button" disabled={!hasRules} onclick={downloadXml}>Download mailFilters.xml</button>
+				</div>
+			</UnlockGate>
 			<ol class="step-list">
 				<li>Gmail on a computer → ⚙ Settings → <strong>See all settings</strong> → <strong>Filters and Blocked Addresses</strong>.</li>
 				<li>Click <strong>Import filters</strong> → choose <span class="code">mailFilters.xml</span> → <strong>Open file</strong> → <strong>Create filters</strong>.</li>
@@ -345,5 +353,10 @@ ${headers.trim()}`
 	</ul>
 	<p class="muted">Remove your email from data brokers too, in the <a href="/opt-out">opt-out center</a>.</p>
 </section>
+
+<aside class="pro-callout no-print">
+	<p><span class="pill">Pro · coming soon</span> <strong>Hands-off spam protection</strong></p>
+	<p>Pro is planned to add automatic call screening, done-for-you data-broker removal, and more. Everything on this page stays free. <a href="/app#pro">Join the free Pro early-access list</a>.</p>
+</aside>
 
 <Faq {faqs} />

@@ -1,5 +1,5 @@
 import { neon } from '@neondatabase/serverless';
-import { createHash, createHmac } from 'node:crypto';
+import { createHash } from 'node:crypto';
 import { hourWindow } from '../security';
 
 export function sqlClient() {
@@ -79,36 +79,14 @@ async function createSchema() {
 }
 
 const TOKEN_RE = /^[a-f0-9]{32}$/;
-const EMAIL_KEY_RE = /^em_[a-f0-9]{40}$/;
 
 /**
- * Account keys are either a random 32-hex token created in the browser, or
- * "em_" + an HMAC of a normalized email (so the raw email is never stored as the key).
+ * Tool state (blocklist, evidence log, opt-out progress) is keyed only by a random 128-bit
+ * workspace key created in the browser. Emails are never used as keys, so nobody can open
+ * someone else's lists by knowing their email address.
  */
 export function isAccountKey(value: unknown): value is string {
-	return typeof value === 'string' && (TOKEN_RE.test(value) || EMAIL_KEY_RE.test(value));
-}
-
-export function emailAccountKey(email: string): string {
-	const secret = process.env.IP_HASH_SECRET ?? 'nospamcalls';
-	return `em_${createHmac('sha256', secret).update(`account:${email}`).digest('hex').slice(0, 40)}`;
-}
-
-/** Moves anonymous-token data onto an email key so the same list follows the user across devices. */
-export async function mergeAccount(fromKey: string, toKey: string): Promise<void> {
-	if (fromKey === toKey) return;
-	await ensureSchema();
-	const sql = sqlClient();
-	await sql`INSERT INTO personal_blocklists (account_key, e164, caller_label, call_type, note, created_at)
-		SELECT ${toKey}, e164, caller_label, call_type, note, created_at FROM personal_blocklists WHERE account_key = ${fromKey}
-		ON CONFLICT (account_key, e164) DO NOTHING`;
-	await sql`DELETE FROM personal_blocklists WHERE account_key = ${fromKey}`;
-	await sql`UPDATE tcpa_evidence_logs SET account_key = ${toKey} WHERE account_key = ${fromKey}`;
-	await sql`INSERT INTO broker_optout_progress (account_key, broker_slug, status, updated_at)
-		SELECT ${toKey}, broker_slug, status, updated_at FROM broker_optout_progress WHERE account_key = ${fromKey}
-		ON CONFLICT (account_key, broker_slug) DO UPDATE SET status = EXCLUDED.status, updated_at = EXCLUDED.updated_at
-		WHERE broker_optout_progress.updated_at < EXCLUDED.updated_at`;
-	await sql`DELETE FROM broker_optout_progress WHERE account_key = ${fromKey}`;
+	return typeof value === 'string' && TOKEN_RE.test(value);
 }
 
 /** Shared hourly rate limiter using the existing rate_limits table. Returns true when allowed. */

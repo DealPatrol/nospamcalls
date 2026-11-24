@@ -183,7 +183,7 @@
 	<p class="muted">{c.codeNote}</p>
 	<p class="legal-note">
 		Only forward to a number you control or a service you trust — whoever owns that number receives your missed calls. NoSpamCalls
-		live call screening (the flat plan) will give you a screening number to use here when it launches; until then you don’t
+		live call screening (planned for <a href="/app#pro">NoSpamCalls Pro</a>) will give you a screening number to use here when it launches; until then you don’t
 		need to forward anything.
 	</p>
 </section>

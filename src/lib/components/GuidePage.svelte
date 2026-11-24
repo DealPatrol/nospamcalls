@@ -11,11 +11,22 @@
 	import Disclaimer from "./Disclaimer.svelte";
 	import SeoHead from "./SeoHead.svelte";
 	import TopicCta from "./TopicCta.svelte";
+	import EmailCaptureBar from "./EmailCaptureBar.svelte";
 
 	let { guide, origin }: { guide: Guide; origin: string } = $props();
 
 	const crumbs: Crumb[] = $derived([{ href: "/", label: "Home" }, ...guide.crumbs]);
 	const canonical = $derived(`${origin}${guide.path}`);
+	const slug = $derived(guide.path.split("/").filter(Boolean).pop() ?? "guide");
+	const captureHeadline = $derived(
+		guide.section === "scams"
+			? "Get free weekly scam alerts — new phone and text scams before they reach you"
+			: guide.section === "block"
+				? "Get the free Top-100 Active Spammers blocklist (.vcf) + weekly scam alerts"
+				: guide.path === "/tcpa-rights"
+					? "Get alerted when new $500–$1,500 TCPA settlements open — free"
+					: "Get our free Top-100 spammer blocklist (.vcf) and weekly scam alerts"
+	);
 	const jsonLd = $derived(
 		[
 			breadcrumbJsonLd(origin, crumbs),
@@ -46,6 +57,15 @@
 		<p class="answer-label">In short</p>
 		<p>{guide.answer}</p>
 	</div>
+	<EmailCaptureBar
+		headline={captureHeadline}
+		sub="One email. Unlocks every free download on NoSpamCalls. Unsubscribe anytime."
+		leadMagnet="guide_checklist"
+		contextValue={slug}
+		button="Get it free"
+	>
+		<p><a class="btn small secondary" href="/api/blocklist.vcf?includeTop=1" download="nospamcalls-blocklist.vcf">Download Top-100 blocklist (.vcf)</a></p>
+	</EmailCaptureBar>
 	<Disclaimer />
 	{#if guide.section === "scams"}
 		<TopicCta
@@ -118,10 +138,10 @@
 		<TopicCta
 			variant="protect"
 			heading="Free next step: a two-minute protection plan"
-			body="See which official, free settings you still have turned off. Email is optional. If you want an app later, the waitlist includes a founding-member pricing promise and no payment now."
+			body="See which official, free settings you still have turned off. No account required."
 			href="/protect"
 			label="Get my plan"
 		/>
-		<p class="fine-print"><a href="/app">Join the app waitlist</a> if you want a note when a consumer app is ready.</p>
+		<p class="fine-print">Want it automated? <a href="/app#pro">Join the free NoSpamCalls Pro early-access list</a> and vote for the features you want. Compare options in our <a href="/compare">spam blocker comparison</a>.</p>
 	</div>
 </article>

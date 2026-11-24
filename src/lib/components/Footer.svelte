@@ -14,6 +14,8 @@
 				<a href="/setup">Phone &amp; carrier setup</a>
 				<a href="/protect">Free protection checkup</a>
 				<a href="/report">Report a number</a>
+				<a href="/spam-call-data">Live spam call data index</a>
+				<a href="/compare">Spam blockers compared</a>
 			</nav>
 			<nav aria-label="Guides">
 				<strong>Guides</strong>
@@ -28,7 +30,7 @@
 			<nav aria-label="About">
 				<strong>More</strong>
 				<a href="/business">Free Scam Likely check</a>
-				<a href="/app">App waitlist</a>
+				<a href="/app">NoSpamCalls Pro early access</a>
 				<a href="/privacy">Privacy</a>
 				<a href="/terms">Terms</a>
 				<a href="/llms.txt">llms.txt</a>

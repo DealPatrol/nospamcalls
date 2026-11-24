@@ -4,6 +4,8 @@
 	import Breadcrumbs from "#lib/components/Breadcrumbs.svelte";
 	import QuickBlock from "#lib/components/QuickBlock.svelte";
 	import Faq from "#lib/components/Faq.svelte";
+	import UnlockGate from "#lib/components/UnlockGate.svelte";
+	import ProCallout from "#lib/components/ProCallout.svelte";
 	import { getAccountKey, postJson } from "#lib/account";
 	import { breadcrumbJsonLd, faqJsonLd, howToJsonLd, webAppJsonLd, type Crumb } from "#lib/seo";
 	import { e164ToSlug, formatNational } from "#lib/phone";
@@ -56,7 +58,8 @@
 		{ q: "How do I block many spam numbers at once on iPhone?", a: "Import a .vcf file that holds all the numbers on one contact, then open that contact and tap Block this Caller. Blocking a contact blocks every number saved on it. After you download a newer list, import it again and block the updated contact." },
 		{ q: "Will a blocklist stop every spam call?", a: "No. Many robocallers spoof a new caller ID for each call, so a list only stops repeat numbers. Pair it with your phone’s built-in screening (Silence or Screen Unknown Callers on iPhone, Call Screen on Android) and your carrier’s free spam filter — see the phone setup wizard." },
 		{ q: "Where do the top numbers come from?", a: "From FCC Consumer Complaints open data (issue: Unwanted Calls) and the FTC Do Not Call Reported Calls Data API, refreshed daily. Only numbers with at least two complaints in the last 30 days are added to the free list." },
-		{ q: "Do I need an account?", a: "No. Your list is tied to a private key stored in this browser. Add an email when you block a number if you want the same list on another device." }
+		{ q: "Do I need an account?", a: "No. Your list is tied to a random private key stored only in this browser, so nobody else can open it. Downloading the .vcf file asks for an email once; that unlocks every free download on the site." },
+		{ q: "Can it block numbers automatically without re-importing?", a: "Not yet. Today you re-download and re-import the .vcf when your list grows. Automatic live call screening that blocks slipped-through numbers for you is planned for NoSpamCalls Pro, which is not launched and has no price yet." }
 	];
 	const vcfHref = $derived(key ? `/api/blocklist.vcf?key=${key}&includeTop=1` : "/api/blocklist.vcf?includeTop=1");
 	const vcfMineOnly = $derived(key ? `/api/blocklist.vcf?key=${key}&includeTop=0` : "");
@@ -114,11 +117,17 @@
 			</div>
 		{/if}
 		{#if error}<p class="form-error">{error}</p>{/if}
-		<div class="btn-row">
-			<a class="btn" href={vcfHref} download="nospamcalls-blocklist.vcf">Download blocklist (.vcf)</a>
-			{#if numbers.length}<a class="btn secondary" href={vcfMineOnly} download="nospamcalls-blocklist.vcf">Only my numbers</a>{/if}
-		</div>
-		<p class="muted">Your list is saved for live call screening when the flat plan launches.</p>
+		<UnlockGate
+			headline="Download the free Top-100 Spammers + your personal blocklist (.vcf)"
+			sub="One email unlocks the file now and every free download on the site. We’ll also send weekly scam alerts."
+			leadMagnet="blocklist_vcf"
+			button="Unlock download"
+		>
+			<div class="btn-row">
+				<a class="btn" href={vcfHref} download="nospamcalls-blocklist.vcf">Download blocklist (.vcf)</a>
+				{#if numbers.length}<a class="btn secondary" href={vcfMineOnly} download="nospamcalls-blocklist.vcf">Only my numbers</a>{/if}
+			</div>
+		</UnlockGate>
 	</div>
 </div>
 
@@ -164,6 +173,8 @@
 		</div>
 	</section>
 {/if}
+
+<ProCallout feature="Automatic live call screening" text="Pro will answer unknown callers and block numbers on your list automatically — no .vcf re-imports." />
 
 <Faq {faqs} />
 <p>Related: <a href="/report-spam-calls">report a number to the FTC and FCC</a> · <a href="/block-spam-calls">carrier and phone blocking guides</a> · <a href="/get-paid">get paid from illegal robocalls</a></p>

@@ -1,8 +1,7 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
 import { listOptout, setOptout } from '#lib/server/accounts';
-import { emailAccountKey, isAccountKey, mergeAccount } from '#lib/server/db';
+import { isAccountKey } from '#lib/server/db';
 import { BROKERS } from '#lib/content/brokers';
-import { normalizeEmail } from '#lib/security';
 
 const STATUSES = ['todo', 'requested', 'removed'];
 const SLUGS = new Set(BROKERS.map((b) => b.slug));
@@ -15,13 +14,7 @@ export const GET: RequestHandler = async ({ url }) => {
 
 export const POST: RequestHandler = async ({ request }) => {
 	const body = (await request.json().catch(() => ({}))) as Record<string, unknown>;
-	let key = isAccountKey(body.key) ? body.key : null;
-	const email = typeof body.email === 'string' && body.email.trim() ? normalizeEmail(body.email) : null;
-	if (email) {
-		const emailKey = emailAccountKey(email);
-		if (key) await mergeAccount(key, emailKey);
-		key = emailKey;
-	}
+	const key = isAccountKey(body.key) ? body.key : null;
 	if (!key) return json({ error: 'Missing key.' }, { status: 400 });
 	const updates: [string, string][] = [];
 	if (typeof body.broker === 'string' && typeof body.status === 'string') updates.push([body.broker, body.status]);

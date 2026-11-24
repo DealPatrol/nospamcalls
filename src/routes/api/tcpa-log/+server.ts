@@ -1,8 +1,8 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
 import { addEvidence, listEvidence, removeEvidence } from '#lib/server/accounts';
-import { allowAction, emailAccountKey, isAccountKey, mergeAccount } from '#lib/server/db';
+import { allowAction, isAccountKey } from '#lib/server/db';
 import { normalizeToE164, slugToE164 } from '#lib/phone';
-import { hashIp, normalizeEmail } from '#lib/security';
+import { hashIp } from '#lib/security';
 
 function clip(value: unknown, max: number): string | null {
 	if (typeof value !== 'string') return null;
@@ -19,13 +19,7 @@ export const GET: RequestHandler = async ({ url }) => {
 export const POST: RequestHandler = async (event) => {
 	const body = (await event.request.json().catch(() => ({}))) as Record<string, unknown>;
 	if (typeof body.website === 'string' && body.website.trim()) return json({ ok: true });
-	let key = isAccountKey(body.key) ? body.key : null;
-	const email = typeof body.email === 'string' && body.email.trim() ? normalizeEmail(body.email) : null;
-	if (email) {
-		const emailKey = emailAccountKey(email);
-		if (key) await mergeAccount(key, emailKey);
-		key = emailKey;
-	}
+	const key = isAccountKey(body.key) ? body.key : null;
 	if (!key) return json({ error: 'Missing key. Refresh and try again.' }, { status: 400 });
 
 	const raw = String(body.number ?? '');

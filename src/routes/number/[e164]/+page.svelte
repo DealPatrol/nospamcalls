@@ -5,6 +5,7 @@
 	import { CATEGORIES, categoryLabel, type CategoryId } from '#lib/categories';
 	import { onMount } from 'svelte';
 	import { getAccountKey, postJson, setAccountKey } from '#lib/account';
+	import EmailCaptureBar from '#lib/components/EmailCaptureBar.svelte';
 	import type { PageProps } from './$types';
 
 	let { data, form }: PageProps = $props();
@@ -109,6 +110,17 @@
 		<p class="muted">Source: FCC Consumer Complaints open data and the FTC Do Not Call Reported Calls Data API. Complaints are unverified consumer reports.</p>
 	</section>
 {/if}
+
+<EmailCaptureBar
+	headline={`Got a call from ${data.national}? Get alerted if complaints spike or a TCPA payout opens — plus grab our free Top-100 Spammer blocklist.`}
+	leadMagnet="number_alert"
+	contextValue={data.e164}
+	button="Alert me free"
+	unlockedText={`We’ll email you if ${data.national} gets new complaints or a matching settlement opens.`}
+	alwaysAsk
+>
+	<p><a class="btn small secondary" href="/api/blocklist.vcf?includeTop=1" download="nospamcalls-blocklist.vcf">Download Top-100 blocklist (.vcf)</a></p>
+</EmailCaptureBar>
 
 {#if data.reported}
 	<p class="form-success" role="status">Your report is on this page.</p>

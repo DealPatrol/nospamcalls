@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { getAccountKey, postJson, setAccountKey } from "#lib/account";
+	import UnlockGate from "./UnlockGate.svelte";
 
 	type Blocked = { e164: string; caller_label: string | null; call_type: string; note: string | null; created_at: string };
 
@@ -17,7 +18,6 @@
 	} = $props();
 
 	let number = $state("");
-	let email = $state("");
 	let callType = $state("robocall");
 	let company = $state("");
 	let note = $state("");
@@ -42,7 +42,6 @@
 		try {
 			const res = await postJson<{ key: string; e164: string; already: boolean; numbers: Blocked[] }>("/api/blocklist", {
 				key: key || getAccountKey(),
-				email,
 				number,
 				callType,
 				company,
@@ -92,10 +91,6 @@
 				<input type="text" bind:value={note} maxlength="300" />
 			</label>
 		{/if}
-		<label>
-			<span>Email (optional — syncs your list across devices)</span>
-			<input type="email" bind:value={email} placeholder="you@example.com" autocomplete="email" />
-		</label>
 		<label class="hp" aria-hidden="true">Website <input type="text" bind:value={website} tabindex="-1" autocomplete="off" /></label>
 		<button class="btn" type="submit" disabled={busy}>{busy ? "Blocking…" : "Block this number"}</button>
 	</form>
@@ -103,10 +98,18 @@
 	{#if added}
 		<div class="form-success" role="status">
 			<p><strong>{added.already ? "Already on your list" : "Blocked on your list"}:</strong> {added.e164}</p>
-			<div class="btn-row">
-				<a class="btn" href={vcfHref} download="nospamcalls-blocklist.vcf">Download updated blocklist (.vcf)</a>
-				<a class="btn secondary" href={`/get-paid?number=${encodeURIComponent(added.e164)}#log`}>Log this call for a $500–$1,500 TCPA claim</a>
-			</div>
+			<UnlockGate
+				headline="Get your blocklist file (.vcf) — free"
+				sub="Your numbers plus the Top-100 most-reported FTC/FCC spam numbers in one contact you can block."
+				leadMagnet="blocklist_vcf"
+				contextValue={added.e164}
+				button="Unlock download"
+			>
+				<div class="btn-row">
+					<a class="btn" href={vcfHref} download="nospamcalls-blocklist.vcf">Download updated blocklist (.vcf)</a>
+				</div>
+			</UnlockGate>
+			<p><a class="btn secondary" href={`/get-paid?number=${encodeURIComponent(added.e164)}#log`}>Log this call for a $500–$1,500 TCPA claim</a></p>
 			<p class="muted">
 				Import the .vcf on your phone and block the “NoSpamCalls Blocklist” contact. <a href="/blocklist">See your full list</a>.
 			</p>

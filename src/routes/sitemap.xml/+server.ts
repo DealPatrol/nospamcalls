@@ -13,6 +13,8 @@ const STATIC_PATHS = [
 	"/opt-out",
 	"/email-shield",
 	"/setup",
+	"/spam-call-data",
+	"/compare",
 	"/report",
 	"/stop-spam-calls",
 	"/business",
