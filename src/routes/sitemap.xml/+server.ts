@@ -18,6 +18,7 @@ const STATIC_PATHS = [
 	"/report",
 	"/stop-spam-calls",
 	"/business",
+	"/business/missed-customer-calls",
 	"/app",
 	"/privacy",
 	"/terms",

@@ -30,4 +30,5 @@
 	<li>It is a request for a look at our public community log, plus a waitlist for a future reputation service.</li>
 	<li>It is not a guarantee, a legal filing, or a same-day unflag from AT&amp;T, Verizon, T-Mobile, Hiya, or similar apps.</li>
 	<li>Read <a href="/scam-likely">what “Scam Likely” means</a> for how those labels usually work.</li>
+	<li>Filtering spam on your own line? Read <a href="/business/missed-customer-calls">how to block spam calls without missing customers</a>.</li>
 </ul>

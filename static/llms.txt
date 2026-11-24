@@ -34,6 +34,7 @@
 - [Free spam-protection checkup](https://nospamcalls.org/protect)
 - [Report a number](https://nospamcalls.org/report)
 - [Business "Scam Likely" check](https://nospamcalls.org/business)
+- [Block spam calls without missing customers (small business guide + missed-call cost check)](https://nospamcalls.org/business/missed-customer-calls)
 - [Sitemap](https://nospamcalls.org/sitemap.xml)
 - Public legal pages: [Privacy](https://nospamcalls.org/privacy) and [Terms](https://nospamcalls.org/terms)
 
