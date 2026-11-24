@@ -193,9 +193,9 @@
 			there are bundles with Google Business Profile care.
 		</p>
 		<p class="cta">
-			<a class="btn ink" href={ER_DEMO}>Book a 15-minute demo</a>
-			<a class="btn ghost" href={ER_URL}>See plans and packages</a>
-			<a class="btn ghost" href="tel:+12569524935">Hear Ava: (256) 952-4935</a>
+			<a class="edbtn ink" href={ER_DEMO}>Book a 15-minute demo</a>
+			<a class="edbtn ghost" href={ER_URL}>See plans and packages</a>
+			<a class="edbtn ghost" href="tel:+12569524935">Hear Ava: (256) 952-4935</a>
 		</p>
 	</section>
 
@@ -332,20 +332,22 @@
 		flex-wrap: wrap;
 		gap: 10px;
 	}
-	.btn {
+	.edbtn {
 		display: inline-flex;
 		align-items: center;
 		min-height: 44px;
 		padding: 0 18px;
 		border: 1px solid var(--ink);
+		border-radius: 2px;
 		font-weight: 700;
 		text-decoration: none;
 	}
-	.btn.ink {
+	.edbtn.ink {
 		background: var(--ink);
 		color: var(--paper) !important;
 	}
-	.btn.ghost {
+	.edbtn.ghost {
+		background: transparent;
 		color: var(--ink) !important;
 	}
 	.codes {
@@ -375,7 +377,7 @@
 		font-size: 19px;
 		font-weight: 600;
 	}
-	.btn:focus-visible,
+	.edbtn:focus-visible,
 	.grid input:focus-visible,
 	.ed a:focus-visible {
 		outline: 3px solid var(--brass);
