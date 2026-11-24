@@ -4,6 +4,7 @@
 
 <svelte:head>
 	<title>{page.status} — NoSpamCalls</title>
+	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
 <h1>{page.status}</h1>

@@ -13,5 +13,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 		});
 	}
 
-	return resolve(event);
+	const response = await resolve(event);
+	if (event.url.pathname === '/unsubscribe') {
+		response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+	}
+	return response;
 };
