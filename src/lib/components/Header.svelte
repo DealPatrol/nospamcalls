@@ -4,10 +4,13 @@
 	const links = [
 		{ href: "/", label: "Home" },
 		{ href: "/blocklist", label: "Block a Number" },
+		{ href: "/text-scam-check", label: "Scam Text Check" },
+		{ href: "/neighbor-spoof", label: "Neighbor Spoof" },
 		{ href: "/get-paid", label: "Get Paid" },
 		{ href: "/email-shield", label: "Email Shield" },
 		{ href: "/opt-out", label: "Opt-Out" },
 		{ href: "/setup", label: "Phone Setup" },
+		{ href: "/family-setup", label: "Family Kit" },
 		{ href: "/spam-call-data", label: "Spam Data" },
 		{ href: "/business", label: "Business" },
 		{ href: "/app", label: "Pro Early Access" }

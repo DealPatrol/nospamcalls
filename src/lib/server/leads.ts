@@ -12,7 +12,12 @@ export const LEAD_MAGNETS = [
 	'gmail_filters',
 	'data_index',
 	'compare_guide',
-	'pro_waitlist'
+	'pro_waitlist',
+	'text_scam_check',
+	'voicemail_shield',
+	'neighbor_spoof',
+	'exposure_check',
+	'family_setup'
 ] as const;
 export type LeadMagnet = (typeof LEAD_MAGNETS)[number];
 

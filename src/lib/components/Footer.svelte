@@ -8,6 +8,11 @@
 			<nav aria-label="Free tools">
 				<strong>Free tools</strong>
 				<a href="/blocklist">Personal blocklist (.vcf)</a>
+				<a href="/text-scam-check">Scam text &amp; link checker</a>
+				<a href="/neighbor-spoof">Neighbor-spoof blocker</a>
+				<a href="/voicemail-shield">“Disconnected” voicemail tone</a>
+				<a href="/exposure-check">People-search exposure check</a>
+				<a href="/family-setup">Family anti-scam kit</a>
 				<a href="/get-paid">Get paid from spam callers</a>
 				<a href="/opt-out">Data-broker opt-out center</a>
 				<a href="/email-shield">Email spam shield</a>

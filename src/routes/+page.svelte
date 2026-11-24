@@ -6,6 +6,7 @@
 	import ProWaitlist from "#lib/components/ProWaitlist.svelte";
 	import Faq from "#lib/components/Faq.svelte";
 	import { FREE_TODAY, PRO_FEATURES } from "#lib/content/pro";
+	import { PAID_FEATURES, PAID_CHECKED } from "#lib/content/paid-features";
 	import { faqJsonLd, organizationJsonLd, websiteJsonLd } from "#lib/seo";
 	import { formatNational, e164ToSlug } from "#lib/phone";
 	import type { PageProps } from "./$types";
@@ -75,6 +76,21 @@
 			{/if}
 		</div>
 	</div>
+</section>
+
+<section id="paid-app-features">
+	<h2>Features paid apps charge $3.99–$32/mo for — free here</h2>
+	<p>
+		We looked at what RoboKiller, Hiya, Truecaller, YouMail, Aura, DeleteMe, and Incogni put behind their paywalls and rebuilt the
+		parts that work on the web, free, with no app to install. Paid plans range from Hiya Premium at $3.99/mo to Aura Family at
+		$32/mo (prices checked on each vendor’s site, {PAID_CHECKED}).
+	</p>
+	<div class="tool-grid">
+		{#each PAID_FEATURES as f}
+			<a class="tool-card" href={f.href}><h3>{f.label}</h3><p>{f.free}</p><p class="muted">{f.paid}</p></a>
+		{/each}
+	</div>
+	<p><a href="/compare">See the full free vs. paid comparison →</a></p>
 </section>
 
 <QuickBlock heading="A spam call got through? Block it so it won’t again" />

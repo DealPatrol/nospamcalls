@@ -43,7 +43,7 @@ function areaCodeFromLead(row: {
 	source_path: string;
 }): string | null {
 	if (
-		row.lead_magnet === 'area_code_alert' &&
+		(row.lead_magnet === 'area_code_alert' || row.lead_magnet === 'neighbor_spoof') &&
 		row.context_value &&
 		/^\d{3}$/.test(row.context_value)
 	) {
@@ -211,7 +211,7 @@ export async function runWeeklyDigests(): Promise<JobCounts> {
 			)
 		ORDER BY l.email,
 			CASE
-				WHEN l.lead_magnet = 'area_code_alert' AND l.context_value ~ '^[0-9]{3}$' THEN 0
+				WHEN l.lead_magnet IN ('area_code_alert', 'neighbor_spoof') AND l.context_value ~ '^[0-9]{3}$' THEN 0
 				WHEN l.source_path ~ '^/area-code/[0-9]{3}' THEN 1
 				WHEN l.lead_magnet = 'number_alert' THEN 2
 				ELSE 3

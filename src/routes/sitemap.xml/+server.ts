@@ -22,6 +22,11 @@ const STATIC_PATHS = [
 	"/privacy",
 	"/terms",
 	"/protect",
+	"/text-scam-check",
+	"/voicemail-shield",
+	"/neighbor-spoof",
+	"/exposure-check",
+	"/family-setup",
 	...SEO_HUB_PATHS,
 	...allGuidePaths()
 ];

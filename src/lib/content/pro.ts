@@ -5,7 +5,12 @@ export const FREE_TODAY = [
 	{ href: '/get-paid', label: 'TCPA settlements & demand letter', text: 'Verified open class-action settlements, damages estimator, evidence packet, demand letter.' },
 	{ href: '/opt-out', label: 'Data-broker opt-out kit', text: '14 official opt-out links, California DROP, and a state-law deletion email generator.' },
 	{ href: '/email-shield', label: 'Email header analyzer + Gmail filters', text: 'SPF/DKIM/DMARC and network-owner lookup, abuse report, downloadable Gmail filter file.' },
-	{ href: '/setup', label: 'Phone & carrier setup wizard', text: 'iOS 26 Ask Reason for Calling, Android Call Screen, carrier filters, forwarding codes.' }
+	{ href: '/setup', label: 'Phone & carrier setup wizard', text: 'iOS 26 Ask Reason for Calling, Android Call Screen, carrier filters, forwarding codes.' },
+	{ href: '/text-scam-check', label: 'Scam text & link checker', text: 'Domain age (RDAP), look-alike and fake-brand links, scam phrases, FTC/FCC number check.' },
+	{ href: '/neighbor-spoof', label: 'Neighbor-spoof prefix blocker', text: 'Reported look-alike numbers for your area code + prefix in one blockable contact.' },
+	{ href: '/voicemail-shield', label: '“Disconnected” voicemail tone', text: 'Real SIT tone WAV plus greeting scripts and carrier steps.' },
+	{ href: '/exposure-check', label: 'People-search exposure check', text: 'Search-yourself links, your state’s privacy law, and a printable deletion packet.' },
+	{ href: '/family-setup', label: 'Family anti-scam setup kit', text: 'Printable large-type guide for a parent’s phone, plus a safe-word card.' }
 ] as const;
 
 export const PRO_FEATURES = [
