@@ -29,9 +29,9 @@
 		{ href: "/", label: "Home" },
 		{ href: "/get-paid", label: "Get paid from spam callers" }
 	];
-	const title = "Get paid from robocalls: TCPA claims, settlements & demand letter";
+	const title = "Get Paid for Spam Calls & Texts ($500–$1,500 TCPA)";
 	const description =
-		"Verified open TCPA class-action settlements, a $500–$1,500 per-call TCPA damages estimator, a free robocall evidence log, a printable case packet, and a self-help demand letter template. Not legal advice.";
+		"How to get paid for spam calls and texts: open TCPA settlements, a $500–$1,500 per-call estimator, a free evidence log, and a demand letter. Not legal advice.";
 	const canonical = $derived(`${data.origin}/get-paid`);
 	const DISCLAIMER =
 		"NoSpamCalls is not a law firm and does not give legal advice. Statutory amounts under 47 U.S.C. § 227 are legal maximums, not guaranteed recoveries.";
@@ -218,6 +218,8 @@ ${yourName || "[Your full name]"}`
 	];
 	const faqs = $derived([
 		{ q: "How much can I get for a robocall?", a: "The TCPA (47 U.S.C. § 227) sets statutory damages at $500 per violation, and a court may award up to $1,500 per violation if it was willful or knowing. These are legal maximums; you must prove the violation and collect the judgment, and many cases settle for less." },
+		{ q: "Can you really get paid for spam calls?", a: "Sometimes. You get paid only when a call broke the TCPA and you can tie it to a company: by filing a claim in an open class-action settlement, by settling after a demand letter, or by winning in small claims or with a lawyer. A spoofed call you cannot trace to anyone usually pays nothing, so log the company name and callback number when you can." },
+		{ q: "Can I get paid for spam texts too?", a: "Often, yes. The FCC and the Supreme Court (Campbell-Ewald Co. v. Gomez, 2016) treat a text message as a “call” under the TCPA, so autodialed marketing texts sent without your consent can carry the same $500 to $1,500 per-message damages. Log texts in the evidence log on this page; it records calls and texts separately." },
 		{ q: "What counts as an illegal robocall?", a: "Generally, calls to a cell phone using a prerecorded or artificial voice or an autodialer without your prior express consent, and more than one telemarketing call in 12 months to a number on the National Do Not Call Registry for 31+ days. Exceptions exist, such as emergency calls and some calls with consent." },
 		{ q: "How do I find out who is really behind a spoofed robocall?", a: "Stay on the line long enough to hear the product, company name, website, or callback number, and write it down. Never give your Social Security number, bank or card details. The company name and a working callback number are what make a claim possible." },
 		{ q: "Do I need a lawyer?", a: "No for small claims court in most states, but a consumer protection attorney can tell you if you have a case. Many TCPA lawyers work on contingency, so there is no upfront fee. NoSpamCalls takes no fee or referral payment." },
@@ -238,7 +240,7 @@ ${yourName || "[Your full name]"}`
 />
 <Breadcrumbs {crumbs} />
 
-<h1>Get paid from spam companies</h1>
+<h1>Get paid for spam calls and texts</h1>
 <div class="answer-box">
 	<p class="answer-label">In short</p>
 	<p>
