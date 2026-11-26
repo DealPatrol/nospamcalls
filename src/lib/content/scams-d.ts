@@ -9,7 +9,11 @@ import {
 	FCC_STOP,
 	FTC_APPLE,
 	FTC_REPORT,
-	USA_GOV
+	FTC_TEXTS,
+	FCC_DELIVERY,
+	USA_GOV,
+	USPIS_SMISHING,
+	USPS_HOLIDAY_2026
 } from "./sources";
 
 const scam = (slug: string, label: string) => [
@@ -194,6 +198,87 @@ export const SCAMS_D: Guide[] = [
 			{ href: FTC_APPLE, label: "FTC: Fake Apple and Amazon support calls" },
 			{ href: FCC_COMPLAINTS, label: "FCC consumer complaints" },
 			{ href: USA_GOV, label: "USA.gov: Complain about phone and text scams" }
+		]
+	},
+	{
+		slug: "package-delivery-tariff-text",
+		path: "/scams/package-delivery-tariff-text",
+		section: "scams",
+		title: "Package “Stuck in Customs” or Tariff Fee Text? It’s Likely a Scam",
+		description:
+			"Got a text saying your package is held, stuck in customs, or needs a tariff or redelivery fee? The FCC and USPS warn these are common holiday scams. Don’t tap the link. Here’s how to check and report it.",
+		headline: "Fake package delivery, customs, and tariff-fee texts",
+		answer:
+			"An unexpected text saying your package is held, “stuck in customs,” or needs a tariff, duty, or redelivery fee is very likely a scam. Do not tap the link, reply, or call the number in it. Check the tracking number in your original order email or on the carrier’s official site or app that you open yourself. Forward the text to 7726 (SPAM) and report it at ReportFraud.ftc.gov.",
+		schema: "HowTo",
+		howToName: "How to check a package delivery or tariff-fee text safely",
+		howToSteps: [
+			{ name: "Do not tap or reply", text: "Leave the link, the callback number, and any “reply Y” request alone. Replying can confirm your number is active." },
+			{ name: "Check the order yourself", text: "Open the original order confirmation from the store, or type the carrier’s website or open its official app, and look up the tracking number there." },
+			{ name: "Ask the seller about fees", text: "If you think import duties may apply, ask the merchant or marketplace you bought from. Legitimate sellers disclose extra fees up front or include them in the price." },
+			{ name: "Report it", text: "Forward the text to 7726 (SPAM), report it at ReportFraud.ftc.gov, and for USPS-themed texts follow the Postal Inspection Service guidance. Then delete it." }
+		],
+		crumbs: scam("package-delivery-tariff-text", "Package and tariff-fee texts"),
+		faqs: [
+			{
+				q: "Does USPS text you to pay a customs or tariff fee?",
+				a: "Do not trust a link in an unexpected text that claims to be from USPS. The Postal Service tells customers not to click links or give personal information in response to texts claiming to come from USPS. Track packages yourself at usps.com or in the official app."
+			},
+			{
+				q: "Why are tariff and customs texts showing up now?",
+				a: "The FCC warns that scammers are using confusion over import duties to claim an order is stuck in customs until a tariff is paid. Holiday shopping means many people really are waiting on deliveries, so the message feels believable."
+			},
+			{
+				q: "I paid the fee or entered my card. What now?",
+				a: "Call your card issuer or bank using the number on your card, dispute the charge, and ask for a new card. Change any password you typed into the fake site, and report the scam at ReportFraud.ftc.gov."
+			},
+			{
+				q: "Is a $1–$3 redelivery fee a sign of a scam?",
+				a: "A small fee is a common hook because it seems harmless, but the real goal is usually your full card number and personal details. Treat any unexpected request to pay for delivery by text link as suspicious."
+			}
+		],
+		sections: [
+			{
+				heading: "What these texts look like",
+				html: block(
+					paragraphs(
+						"The message usually says a package could not be delivered, the address is incomplete, or the order is “stuck in customs” until you pay a small tariff, duty, or redelivery fee. It links to a site that copies USPS, UPS, FedEx, DHL, or a store’s branding and asks for your card and address.",
+						"[[fccDelivery]] says scammers have adjusted delivery texts to claim you owe a tariff before an order can be delivered, and [[ftcTexts]] lists fake package-delivery problems among the most-reported text scams."
+					),
+					list([
+						"It arrives when you did not expect a problem, often from an unfamiliar number or email address.",
+						"It pushes urgency: pay today or the package is returned or destroyed.",
+						"The link uses a look-alike or shortened web address, not the carrier’s real site.",
+						"The fee is small, so paying feels easier than checking."
+					])
+				)
+			},
+			{
+				heading: "The safe way to check",
+				html: paragraphs(
+					"Ignore the link. Open your original order confirmation, or type the carrier’s web address yourself, and enter the tracking number there. If you think duties may apply to an imported order, ask the seller directly. Legitimate companies tell you about extra fees up front.",
+					'Not sure about a link? Paste the text into our free <a href="/text-scam-check">scam text and link checker</a>, which inspects the link without opening it. The same playbook applies to <a href="/scams/toll-road-text">fake unpaid-toll texts</a>.'
+				)
+			},
+			{
+				heading: "How to report it",
+				html: paragraphs(
+					"Forward the text to 7726 (SPAM) so your carrier can block similar messages, then report it at [[ftcReport]]. For USPS-themed messages, see [[uspis]] and [[uspsHoliday]]. You can also file a complaint with the [[fccComplaints]]."
+				)
+			}
+		],
+		related: [
+			{ href: "/scams/toll-road-text", label: "Fake unpaid-toll texts" },
+			{ href: "/scams/amazon-apple", label: "Fake Apple and Amazon support" },
+			{ href: "/text-scam-check", label: "Free scam text and link checker" },
+			{ href: "/report-spam-calls", label: "How to report spam calls and texts" }
+		],
+		sources: [
+			{ href: FCC_DELIVERY, label: "FCC: How to avoid package delivery scams" },
+			{ href: USPIS_SMISHING, label: "USPIS: Smishing package-tracking text scams" },
+			{ href: USPS_HOLIDAY_2026, label: "USPS: Tips to avoid holiday scams (Nov. 24, 2026)" },
+			{ href: FTC_TEXTS, label: "FTC Data Spotlight: Top text scams" },
+			{ href: FTC_REPORT, label: "FTC ReportFraud.ftc.gov" }
 		]
 	}
 ];

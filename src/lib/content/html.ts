@@ -25,7 +25,10 @@ const LINKS: Record<string, [string, string]> = {
 	verizon: [S.VERIZON, "Verizon Call Filter"],
 	tmo: [S.TMO, "T-Mobile Scam Shield support"],
 	ftcTexts: [S.FTC_TEXTS, "FTC Consumer Protection Data Spotlight: Top Text Scams of 2024"],
-	tcpa: [S.TCPA_STATUTE, "47 U.S.C. § 227"]
+	tcpa: [S.TCPA_STATUTE, "47 U.S.C. § 227"],
+	fccDelivery: [S.FCC_DELIVERY, "the FCC guide to package delivery scams"],
+	uspis: [S.USPIS_SMISHING, "the U.S. Postal Inspection Service smishing alert"],
+	uspsHoliday: [S.USPS_HOLIDAY_2026, "USPS holiday scam tips (Nov. 24, 2026)"]
 };
 
 /** Replace [[key]] placeholders with official links. Content is authored here, not user input. */

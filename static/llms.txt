@@ -28,6 +28,7 @@
 - [Block spam calls (iPhone, Android, AT&T, Verizon, T-Mobile)](https://nospamcalls.org/block-spam-calls)
 - [Report spam calls to the FTC and FCC](https://nospamcalls.org/report-spam-calls)
 - [Phone and text scam guides](https://nospamcalls.org/scams)
+- [Package “stuck in customs” or tariff-fee text scams](https://nospamcalls.org/scams/package-delivery-tariff-text)
 - [What "Scam Likely" means](https://nospamcalls.org/scam-likely)
 - [TCPA rights](https://nospamcalls.org/tcpa-rights)
 - [U.S. area-code directory](https://nospamcalls.org/area-code) — each area-code page lists the most-reported numbers with that area code in federal complaints.

@@ -29,9 +29,9 @@
 		{ href: "/", label: "Home" },
 		{ href: "/get-paid", label: "Get paid from spam callers" }
 	];
-	const title = "Get paid from robocalls: TCPA claims, settlements & demand letter";
+	const title = "Get Paid for Spam Calls: $500–$1,500 per Illegal Robocall (TCPA)";
 	const description =
-		"Verified open TCPA class-action settlements, a $500–$1,500 per-call TCPA damages estimator, a free robocall evidence log, a printable case packet, and a self-help demand letter template. Not legal advice.";
+		"Yes, you can get money from illegal spam calls: the TCPA sets $500 per violation, up to $1,500 if willful. Check open settlements, estimate your claim, log calls free, and print a demand letter. Not legal advice.";
 	const canonical = $derived(`${data.origin}/get-paid`);
 	const DISCLAIMER =
 		"NoSpamCalls is not a law firm and does not give legal advice. Statutory amounts under 47 U.S.C. § 227 are legal maximums, not guaranteed recoveries.";
@@ -238,7 +238,7 @@ ${yourName || "[Your full name]"}`
 />
 <Breadcrumbs {crumbs} />
 
-<h1>Get paid from spam companies</h1>
+<h1>Get paid for spam calls: how to get money from illegal robocalls</h1>
 <div class="answer-box">
 	<p class="answer-label">In short</p>
 	<p>

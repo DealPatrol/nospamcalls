@@ -130,9 +130,9 @@ export const SCAMS_B: Guide[] = [
 		slug: "bank-fraud-alert",
 		path: "/scams/bank-fraud-alert",
 		section: "scams",
-		title: "Fake bank fraud-alert calls and texts",
+		title: "Bank Scam Calls & Fake Fraud-Alert Texts: How to Tell If It’s Real",
 		description:
-			"Fake fraud-alert texts and calls were among the FTC’s top text scams. Do not use the number or link in an unexpected alert. Call the number on your card or in your official banking app.",
+			"Got a call or text from your “bank’s fraud department”? Fake fraud alerts are among the FTC’s top text scams. Never share a one-time code or use the number in the alert. Here’s the safe way to check.",
 		headline: "Fake bank and card fraud-alert calls and texts",
 		answer:
 			"An unexpected “fraud alert” call or text may be a scam even if it looks like your bank. Do not tap the link or call the number in the message. Use the phone number on the back of your card, or open the official banking app you already use, and contact the bank there.",
@@ -146,6 +146,10 @@ export const SCAMS_B: Guide[] = [
 			{
 				q: "Why would a caller ask for a one-time code?",
 				a: "One-time passcodes are often the key to your account. A real fraud department that called you will not need you to read a code that just arrived on the same phone to cancel a charge. If someone asks for that code, hang up and contact the bank yourself."
+			},
+			{
+				q: "What does “CBNA” mean in an alert text?",
+				a: "CBNA is short for Citibank, N.A., the bank that issues Citi cards and many store cards. Real card alerts exist, but scammers copy bank names too. Do not tap the link or call back the number in the text. Open the official card app, or call the number on the back of your card."
 			},
 			{
 				q: "What should I do if I already tapped a link or gave a code?",

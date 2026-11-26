@@ -23,3 +23,6 @@ export const VERIZON = "https://www.verizon.com/solutions-and-services/call-filt
 export const TMO = "https://www.t-mobile.com/support/plans-features/t-mobile-scam-shield";
 export const FTC_TEXTS = "https://www.ftc.gov/system/files/ftc_gov/pdf/spotlight-top-text-scams.pdf";
 export const TCPA_STATUTE = "https://www.law.cornell.edu/uscode/text/47/227";
+export const FCC_DELIVERY = "https://www.fcc.gov/how-identify-and-avoid-package-delivery-scams";
+export const USPIS_SMISHING = "https://www.uspis.gov/news/scam-article/smishing-package-tracking-text-scams";
+export const USPS_HOLIDAY_2026 = "https://about.usps.com/newsroom/national-releases/2026/1124-postal-services-share-tips-to-avoid-holiday-scams.htm";

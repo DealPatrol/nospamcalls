@@ -17,7 +17,7 @@
 	const nf = (n: number) => n.toLocaleString("en-US");
 	const day = (iso: string | null) =>
 		iso ? new Date(iso).toLocaleDateString("en-US", { dateStyle: "long", timeZone: "America/Chicago" }) : "—";
-	const title = "Live US Spam Call & Robocall Data Index (2026)";
+	const title = "Scammer Phone Number List 2026: Live US Spam Call Data";
 	const description = $derived(
 		idx
 			? `${nf(idx.numbers)} phone numbers from ${nf(idx.complaints)} FCC and FTC unwanted-call complaints: the most-reported spam numbers, caller area codes, complainant states, and complaint topics. Updated daily.`
