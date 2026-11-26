@@ -230,13 +230,13 @@
 
 <style>
 	.ed {
-		--paper: #f5efe3;
-		--paper-deep: #ebe2d0;
-		--ink: #1c1a17;
-		--ink-soft: #4a443b;
-		--brass: #a8792a;
-		--brass-deep: #7c5717;
-		--rule: #d6c9ad;
+		--paper: #f7f5ef;
+		--paper-deep: #eef2ee;
+		--ink: #1e2620;
+		--ink-soft: #4e5e52;
+		--brass: #8cae93;
+		--brass-deep: #4e5e52;
+		--rule: #e6e2d6;
 		background: var(--paper);
 		color: var(--ink);
 		padding: clamp(20px, 4vw, 48px);
@@ -308,8 +308,8 @@
 	.grid input {
 		min-height: 42px;
 		padding: 6px 10px;
-		border: 1px solid #b9aa8a;
-		background: #fffdf8;
+		border: 1px solid #d6ddd7;
+		background: #eef2ee;
 		color: var(--ink);
 		font: inherit;
 	}
@@ -323,7 +323,7 @@
 		margin: 4px 0;
 	}
 	.offer {
-		background: #fbf7ee;
+		background: #f7f5ef;
 		padding: 24px;
 		border: 2px solid var(--brass);
 	}
@@ -343,8 +343,13 @@
 		text-decoration: none;
 	}
 	.edbtn.ink {
-		background: var(--ink);
-		color: var(--paper) !important;
+		background: #e84630;
+		border-color: #e84630;
+		color: #fff !important;
+	}
+	.edbtn.ink:hover {
+		background: #d13823;
+		border-color: #d13823;
 	}
 	.edbtn.ghost {
 		background: transparent;

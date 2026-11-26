@@ -11,7 +11,7 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<meta name="theme-color" content="#12233A" />
+	<meta name="theme-color" content="#F7F5EF" />
 </svelte:head>
 
 <div class="site-shell">
