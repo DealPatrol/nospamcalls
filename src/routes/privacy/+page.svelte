@@ -14,7 +14,7 @@
 
 <article class="prose">
 	<h1>Privacy policy</h1>
-	<p class="muted">Last updated: November 23, 2026</p>
+	<p class="muted">Last updated: November 26, 2026</p>
 	<p>
 		NoSpamCalls is a free website for looking up and reporting phone numbers and for publishing practical
 		guides. This policy explains what we collect and why. It is not legal advice.
@@ -123,13 +123,49 @@
 		or contact details of the people who complained.
 	</p>
 
+	<h2 id="ios-app">NoSpamCalls iPhone app</h2>
+	<p>
+		The NoSpamCalls: Spam Call Blocker iPhone app is built to work without an account, and nothing you enter in it
+		is sent to us.
+	</p>
+	<ul>
+		<li>
+			<strong>Stays on your iPhone:</strong> your personal blocklist, blocked prefixes, custom text rules, exposure
+			checklist, opt-out progress, TCPA evidence log, family checklist, and settings. Saved passwords are stored in the
+			iOS Keychain on your device and can be protected with Face ID.
+		</li>
+		<li>
+			<strong>Spam-number updates:</strong> the app downloads the public list at <code>/api/call-directory.json</code>.
+			That request contains no personal information beyond what any web request includes (such as IP address and
+			user-agent, which our host may log).
+		</li>
+		<li>
+			<strong>Call blocking:</strong> iOS gives the app’s Call Directory extension a list of numbers to block. The app
+			never sees your call history, contacts, or who calls you.
+		</li>
+		<li>
+			<strong>Text filtering:</strong> iOS asks the app’s message filter to sort texts from unknown senders. It runs only
+			on your device; the app does not receive, store, or send message content, and iOS never shows it iMessages or
+			texts from your contacts.
+		</li>
+		<li>
+			<strong>Password breach check:</strong> the app sends only the first 5 characters of a SHA-1 hash of the password to
+			the free Pwned Passwords service (api.pwnedpasswords.com) and compares the results on your device. Your password
+			never leaves your iPhone.
+		</li>
+		<li>
+			<strong>Purchases:</strong> subscriptions are processed by Apple. We do not receive your payment details.
+		</li>
+		<li><strong>No tracking:</strong> the app has no ads, analytics, or tracking SDKs.</li>
+	</ul>
+	<p>Deleting the app, or using “Erase all data” in its settings, removes everything it stored on your device.</p>
+
 	<h2>Children</h2>
 	<p>The site is not directed at children under 13, and we do not knowingly collect their information.</p>
 
 	<h2>Contact</h2>
 	<p>
 		For privacy questions or to ask us to remove an email we stored (sign-up, alert, Pro early access,
-		waitlist, or business check), use the contact method published on this site when one is available, or do not submit
-		additional personal information until one is.
+		waitlist, or business check), email <a href="mailto:info@nospamcalls.org">info@nospamcalls.org</a>.
 	</p>
 </article>

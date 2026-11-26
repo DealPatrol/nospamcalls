@@ -14,7 +14,7 @@
 
 <article class="prose">
 	<h1>Terms of use</h1>
-	<p class="muted">Last updated: November 20, 2026</p>
+	<p class="muted">Last updated: November 26, 2026</p>
 
 	<h2>Not legal advice</h2>
 	<p>
@@ -47,6 +47,20 @@
 	<p>
 		You may not use the site to harass anyone, scrape it in a way that overloads the service, submit
 		automated junk, or attempt to break security or rate limits.
+	</p>
+
+	<h2 id="ios-subscriptions">iPhone app and subscriptions</h2>
+	<p>
+		The NoSpamCalls: Spam Call Blocker iPhone app is licensed to you under Apple’s
+		<a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" rel="noopener">Standard End User License
+		Agreement</a> together with these terms. Core blocking tools are free. NoSpamCalls Pro is an optional auto-renewing
+		subscription (monthly or yearly) purchased through your Apple ID. If a free trial is offered, it converts to a paid
+		subscription at the end of the trial unless you cancel at least 24 hours before it ends. Payment is charged to your
+		Apple ID at confirmation of purchase, and the subscription renews automatically unless auto-renew is turned off at
+		least 24 hours before the end of the current period. You can manage or cancel it any time in Settings &gt; your
+		name &gt; Subscriptions. Refunds are handled by Apple under its policies. Call and text filtering depend on iOS
+		features and public complaint data, and we cannot guarantee that every unwanted call or text is blocked or that no
+		wanted call or text is filtered.
 	</p>
 
 	<h2>Disclaimer of warranties and limitation of liability</h2>
