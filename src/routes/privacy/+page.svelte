@@ -125,8 +125,8 @@
 
 	<h2 id="ios-app">NoSpamCalls iPhone app</h2>
 	<p>
-		The NoSpamCalls: Spam Call Blocker iPhone app is built to work without an account, and nothing you enter in it
-		is sent to us.
+		The NoSpamCalls: Robocall Blocker iPhone app is built to work without an account. Apart from the optional burner
+		number described below, nothing you enter in it is sent to us.
 	</p>
 	<ul>
 		<li>
@@ -152,6 +152,17 @@
 			<strong>Password breach check:</strong> the app sends only the first 5 characters of a SHA-1 hash of the password to
 			the free Pwned Passwords service (api.pwnedpasswords.com) and compares the results on your device. Your password
 			never leaves your iPhone.
+		</li>
+		<li>
+			<strong>Burner number (optional, Pro + Burner only):</strong> if you turn on a burner number, the app sends us a
+			random install ID, the area code you pick, the phone number you want burner calls forwarded to, your call-handling
+			choice (forward or voicemail), and your App Store subscription transaction so we can confirm the subscription. We
+			buy and operate the number through our telephone carrier, Twilio. Calls and texts to the burner number are
+			processed by Twilio: calls are forwarded to your number or recorded as voicemail, and we store texts received
+			(sender number and message), voicemail recordings (caller number, length, and audio), and monthly call minutes so
+			the app can show them to you. Your main phone line is never forwarded through us. When you burn the number,
+			release it, or your Pro + Burner subscription ends (after a 3-day grace period), we release the number and delete
+			its stored texts, voicemails, recordings, and forwarding number. We do not sell this data or use it for advertising.
 		</li>
 		<li>
 			<strong>Purchases:</strong> subscriptions are processed by Apple. We do not receive your payment details.

@@ -1,7 +1,20 @@
 {
 	"crons": [
-		{ "path": "/api/cron/ingest-gov-complaints", "schedule": "0 11 * * *" },
-		{ "path": "/api/cron/email-queue", "schedule": "0 15 * * *" },
-		{ "path": "/api/cron/weekly-digest", "schedule": "0 15 * * 1" }
+		{
+			"path": "/api/cron/ingest-gov-complaints",
+			"schedule": "0 11 * * *"
+		},
+		{
+			"path": "/api/cron/email-queue",
+			"schedule": "0 15 * * *"
+		},
+		{
+			"path": "/api/cron/weekly-digest",
+			"schedule": "0 15 * * 1"
+		},
+		{
+			"path": "/api/cron/burner-cleanup",
+			"schedule": "30 12 * * *"
+		}
 	]
 }
