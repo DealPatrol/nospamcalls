@@ -1,7 +1,7 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
-import { activeBurnerTransaction, AppStoreVerifyError } from '#lib/server/appstore';
+import { activeBurnerTransaction, AppStoreVerifyError, sha256 } from '#lib/server/appstore';
 import { twilioConfig, TwilioError, twilioRequest } from '#lib/server/twilio';
-import { buyNumber, fail, insertBurner, notConfigured, publicBurner, readJsonBody, usE164, validAreaCode, validInstallId } from '#lib/server/burner';
+import { buyNumber, fail, insertBurner, newToken, notConfigured, publicBurner, readJsonBody, usE164, validAreaCode, validInstallId, type BurnerRow } from '#lib/server/burner';
 import { sqlClient } from '#lib/server/db';
 
 /**
@@ -31,8 +31,18 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 
 	const sql = sqlClient();
-	const existing = await sql`SELECT install_id FROM burner_numbers WHERE status = 'active' AND (install_id = ${installId} OR original_transaction_id = ${tx.originalTransactionId}) LIMIT 1`;
-	if (existing.length) return fail(409, 'already_active', 'This subscription already has an active burner number. Burn it first to get a new one.');
+	const other = await sql`SELECT 1 FROM burner_numbers WHERE status = 'active' AND install_id = ${installId} AND original_transaction_id <> ${tx.originalTransactionId} LIMIT 1`;
+	if (other.length) return fail(409, 'already_active', 'This iPhone already has an active burner number. Burn it first to get a new one.');
+	// Same subscription, new install (reinstall or new iPhone): re-link the existing number with a fresh token.
+	// Only a device holding this Apple-signed subscription transaction can do this.
+	const mine = (await sql`SELECT * FROM burner_numbers WHERE status = 'active' AND original_transaction_id = ${tx.originalTransactionId} LIMIT 1`) as BurnerRow[];
+	if (mine.length) {
+		const token = newToken();
+		const rows = (await sql`UPDATE burner_numbers SET install_id = ${installId}, token_hash = ${sha256(token)},
+			expires_at = GREATEST(expires_at, ${new Date(tx.expiresDate!).toISOString()}), updated_at = now()
+			WHERE id = ${mine[0].id} RETURNING *`) as BurnerRow[];
+		return json({ burner: publicBurner(rows[0]), token, relinked: true }, { headers: { 'Cache-Control': 'no-store' } });
+	}
 
 	let bought;
 	try {
