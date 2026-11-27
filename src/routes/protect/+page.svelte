@@ -3,7 +3,7 @@
 	import EmailCaptureBar from "#lib/components/EmailCaptureBar.svelte";
 	import UnlockGate from "#lib/components/UnlockGate.svelte";
 	import SeoHead from "#lib/components/SeoHead.svelte";
-	import { articleJsonLd, breadcrumbJsonLd, type Crumb } from "#lib/seo";
+	import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, type Crumb } from "#lib/seo";
 	import { QUIZ_QUESTIONS, quizLabel, scoreQuiz, type QuizAnswers } from "#lib/quiz";
 	import type { PageProps } from "./$types";
 
@@ -18,9 +18,23 @@
 		{ href: "/", label: "Home" },
 		{ href: "/protect", label: "Spam-protection checkup" }
 	];
-	const title = "Free spam-protection checkup";
+	const title = "Free Spam Call Blocker Checkup: Your 6-Step Plan";
 	const description =
-		"Answer six questions and get a personalized, printable plan to cut down spam calls. Free, no account required. Email is optional.";
+		"Which free spam call blocker settings are you missing? Answer six yes-or-no questions and get a printable plan for your carrier and phone. No account needed.";
+	const faqs = [
+		{
+			q: "What is the best free spam call blocker?",
+			a: "Start with the free tools you already have: your carrier’s filter (AT&T ActiveArmor, Verizon Call Filter, or T-Mobile Scam Shield) and your phone’s own setting (Silence Unknown Callers on iPhone, or spam filtering and Call Screen in the Google Phone app on many Android phones). This checkup shows which of those steps you have not done yet."
+		},
+		{
+			q: "Do I need to pay for a spam call blocker app?",
+			a: "Not to start. The free carrier and phone settings block or label many spam calls, and the National Do Not Call Registry is free. No blocker, free or paid, stops every scam call, so the plan also covers what to do when one gets through."
+		},
+		{
+			q: "What does this spam-protection checkup do?",
+			a: "You answer six yes-or-no questions about how you handle unknown calls and scam texts. You get a personalized plan right away, with links to the official steps. It is free and needs no account; printing the plan asks for your email once."
+		}
+	];
 	const canonical = $derived(`${data.origin}/protect`);
 
 	function showPlan() {
@@ -39,13 +53,14 @@
 	{canonical}
 	jsonLd={[
 		breadcrumbJsonLd(data.origin, crumbs),
-		articleJsonLd({ origin: data.origin, path: "/protect", headline: title, description })
+		articleJsonLd({ origin: data.origin, path: "/protect", headline: title, description }),
+		faqJsonLd(faqs)
 	]}
 />
 <Breadcrumbs {crumbs} />
 
 <article class="prose">
-	<h1>Free spam-protection checkup</h1>
+	<h1>Free spam call blocker checkup</h1>
 	{#if form?.success}
 		<p class="form-success" role="status">Your email was saved for the updates you asked for. We are not sending mail yet.</p>
 	{/if}
@@ -124,5 +139,13 @@
 			<li><a href="/blocklist">Block a number that got through</a> and <a href="/get-paid">see open TCPA settlements</a></li>
 			<li><a href="/app#pro">Join the free NoSpamCalls Pro early-access list</a> (not launched, nothing to pay)</li>
 		</ul>
+	</section>
+
+	<section class="no-print">
+		<h2>Spam call blocker questions</h2>
+		{#each faqs as faq}
+			<h3>{faq.q}</h3>
+			<p>{faq.a}</p>
+		{/each}
 	</section>
 </article>
