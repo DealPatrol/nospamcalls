@@ -12,7 +12,11 @@ export default defineConfig({
 				runes: ({ filename }) =>
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
-			adapter: adapter()
+			adapter: adapter(),
+			// The built-in Origin check can't exempt single routes, and Twilio webhooks (form POSTs with no Origin
+			// header) must reach /api/burner/{voice,sms,voicemail-callback}. The same check runs in hooks.server.ts
+			// for every other route; the Twilio routes are authenticated by X-Twilio-Signature instead.
+			csrf: { trustedOrigins: ['*'] }
 		})
 	]
 });
