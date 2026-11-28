@@ -8,6 +8,7 @@
 	import { e164ToSlug, formatNational } from "#lib/phone";
 	import { articleJsonLd, breadcrumbJsonLd, faqJsonLd, type Crumb } from "#lib/seo";
 	import { categoryLabel } from "#lib/categories";
+	import { stateByAbbr, stateSpamPath } from "#lib/content/state-spam";
 	import type { PageProps } from "./$types";
 
 	let { data }: PageProps = $props();
@@ -140,6 +141,14 @@
 		Source: <a href={AREA_CODE_SOURCE.url} rel="noopener noreferrer">{AREA_CODE_SOURCE.name}</a>, file date
 		{AREA_CODE_SOURCE.fileDate}. We do not add unofficial city lists when NANPA leaves AREA_SERVED blank.
 	</p>
+
+	{#if code.kind !== "toll-free" && stateByAbbr(code.state)}
+		{@const st = stateByAbbr(code.state)!}
+		<p>
+			See all {st.name} area codes and the most-reported numbers from {st.name} complaints on
+			<a href={stateSpamPath(st)}>spam calls in {st.name}</a>.
+		</p>
+	{/if}
 
 	<h2>Spoofing and scam calls</h2>
 	<p>

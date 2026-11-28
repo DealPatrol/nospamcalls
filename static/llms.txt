@@ -32,6 +32,7 @@
 - [What "Scam Likely" means](https://nospamcalls.org/scam-likely)
 - [TCPA rights](https://nospamcalls.org/tcpa-rights)
 - [U.S. area-code directory](https://nospamcalls.org/area-code) — each area-code page lists the most-reported numbers with that area code in federal complaints.
+- [Spam calls by state](https://nospamcalls.org/spam-calls) — one page per state (for example [Alabama](https://nospamcalls.org/spam-calls/alabama)) with the most-reported numbers in FTC/FCC complaints from that state (by the consumer's state on the latest complaint), the state's NANPA area codes, and free blocking and reporting steps. Alabama adds the Attorney General complaint form and hotline, the Alabama Telemarketing Act licensing rule, and the PSC note that Alabama merged its Do Not Call register with the national registry (checked Nov 28, 2026).
 - [Free spam-protection checkup](https://nospamcalls.org/protect)
 - [Report a number](https://nospamcalls.org/report)
 - [Business "Scam Likely" check](https://nospamcalls.org/business)
