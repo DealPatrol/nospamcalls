@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { SITE_NAME } from '#lib/site';
+	import { metaDescription } from '#lib/seo';
 
 	let {
 		title,
@@ -16,12 +17,13 @@
 	} = $props();
 
 	const fullTitle = $derived(title.includes(SITE_NAME) ? title : `${title} — ${SITE_NAME}`);
+	const metaDesc = $derived(metaDescription(description));
 	const payloads = $derived(jsonLd.filter(Boolean));
 </script>
 
 <svelte:head>
 	<title>{fullTitle}</title>
-	<meta name="description" content={description} />
+	<meta name="description" content={metaDesc} />
 	<link rel="canonical" href={canonical} />
 	<meta property="og:title" content={fullTitle} />
 	<meta property="og:description" content={description} />
@@ -30,7 +32,7 @@
 	<meta property="og:site_name" content={SITE_NAME} />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:title" content={fullTitle} />
-	<meta name="twitter:description" content={description} />
+	<meta name="twitter:description" content={metaDesc} />
 	{#each payloads as data, i (i)}
 		{@html `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`}
 	{/each}

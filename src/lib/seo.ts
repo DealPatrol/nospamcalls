@@ -4,6 +4,20 @@ export const CONTENT_UPDATED = '2026-11-20';
 
 export type Crumb = { href: string; label: string };
 
+/** Search results show about 155-160 characters of a meta description. */
+export const META_DESCRIPTION_MAX = 160;
+/** Trims a meta description to a sentence end, or else a word boundary with an ellipsis, so results never cut mid-word. */
+export function metaDescription(text: string, max = META_DESCRIPTION_MAX): string {
+	const clean = text.replace(/\s+/g, ' ').trim();
+	if (clean.length <= max) return clean;
+	const window = clean.slice(0, max);
+	const sentenceEnd = Math.max(window.lastIndexOf('. '), window.lastIndexOf('? '), window.lastIndexOf('! '));
+	if (sentenceEnd >= 90) return window.slice(0, sentenceEnd + 1);
+	const space = clean.slice(0, max - 1).lastIndexOf(' ');
+	return `${clean.slice(0, space > 0 ? space : max - 1).replace(/[\s,;:—–-]+$/, '')}…`;
+}
+
+
 export function breadcrumbJsonLd(origin: string, crumbs: Crumb[]) {
 	return {
 		'@context': 'https://schema.org',

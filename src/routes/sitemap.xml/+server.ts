@@ -1,5 +1,6 @@
 import { allGuidePaths, SEO_HUB_PATHS } from "#lib/content/guides";
 import { AREA_CODES } from "#lib/data/area-codes";
+import { STATE_ENTRIES, stateSpamPath } from "#lib/content/state-spam";
 import { recentReportedSlugs } from "#lib/db";
 import { sitemapGovNumbers } from "#lib/server/gov";
 import { e164ToSlug } from "#lib/phone";
@@ -28,6 +29,8 @@ const STATIC_PATHS = [
 	"/neighbor-spoof",
 	"/exposure-check",
 	"/family-setup",
+	"/spam-calls",
+	...STATE_ENTRIES.map(stateSpamPath),
 	...SEO_HUB_PATHS,
 	...allGuidePaths()
 ];

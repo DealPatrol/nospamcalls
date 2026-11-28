@@ -365,6 +365,50 @@ export async function govNumbersByAreaCode(npa: string, limit = 10): Promise<{ n
 	return { numbers: (rows as Record<string, unknown>[]).map(normalizeRow), total: Number(a.total), complaints: Number(a.complaints) };
 }
 
+export type StateSummary = {
+	numbers: number;
+	complaints: number;
+	top: GovNumber[];
+	subjects: { label: string; numbers: number; complaints: number }[];
+	areaCodes: { npa: string; numbers: number; complaints: number }[];
+};
+
+/**
+ * Live figures for one state page. "Reported from" uses sample_state, the consumer's state on the most recent
+ * FTC/FCC complaint for each number. Area-code figures count caller numbers that start with the state's area codes.
+ */
+export async function govStateSummary(state: string, npas: string[]): Promise<StateSummary> {
+	const empty: StateSummary = { numbers: 0, complaints: 0, top: [], subjects: [], areaCodes: [] };
+	if (!/^[A-Z]{2}$/.test(state)) return empty;
+	const codes = npas.filter((n) => /^\d{3}$/.test(n));
+	await ensureSchema();
+	const sql = sqlClient();
+	const [totals, top, subjects, areaCodes] = await Promise.all([
+		sql`SELECT count(*)::int AS numbers, coalesce(sum(total_gov_count),0)::int AS complaints
+			FROM gov_spam_numbers WHERE sample_state = ${state}`,
+		sql`SELECT * FROM gov_spam_numbers WHERE sample_state = ${state}
+			ORDER BY total_gov_count DESC, last_reported_at DESC NULLS LAST LIMIT 15`,
+		sql`SELECT top_subject AS label, count(*)::int AS numbers, sum(total_gov_count)::int AS complaints
+			FROM gov_spam_numbers WHERE sample_state = ${state} AND top_subject IS NOT NULL AND top_subject <> ''
+			GROUP BY 1 ORDER BY complaints DESC LIMIT 8`,
+		codes.length
+			? sql`SELECT substring(e164 from 3 for 3) AS npa, count(*)::int AS numbers, sum(total_gov_count)::int AS complaints
+				FROM gov_spam_numbers WHERE e164 LIKE '+1%' AND substring(e164 from 3 for 3) = ANY(${codes}::text[])
+				GROUP BY 1 ORDER BY complaints DESC`
+			: Promise.resolve([])
+	]);
+	const t = totals[0] as Record<string, unknown>;
+	const num = <T extends Record<string, unknown>>(rows: unknown[]) =>
+		(rows as T[]).map((r) => ({ ...r, numbers: Number(r.numbers), complaints: Number(r.complaints) }));
+	return {
+		numbers: Number(t.numbers),
+		complaints: Number(t.complaints),
+		top: (top as Record<string, unknown>[]).map(normalizeRow),
+		subjects: num<{ label: string; numbers: number; complaints: number }>(subjects as unknown[]),
+		areaCodes: num<{ npa: string; numbers: number; complaints: number }>(areaCodes as unknown[])
+	};
+}
+
 export type DataIndex = {
 	numbers: number;
 	complaints: number;
